@@ -10,7 +10,7 @@ namespace DungeonMap
 
         string[,] GameMap = new string[80, 25];
 
-        public void MapDisplay()
+        public void Display()
         {
             for (int x = 0; x <= 79; x++)
             {
@@ -22,11 +22,11 @@ namespace DungeonMap
             }
         }
 
-        public void CreateMap()
+        public void Create()
         {
             Random random = new Random();
 
-            int RoomHeight = random.Next(5, 8);
+            int RoomHeight = random.Next(6, 10);
             int RoomWidth = random.Next(7, 10);
             int RoomPOSX = random.Next(0, 79 - RoomWidth - 1);
             int RoomPOSY = random.Next(0, 24 - RoomHeight - 1);

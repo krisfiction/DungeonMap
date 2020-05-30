@@ -10,8 +10,8 @@ namespace DungeonMap
             Console.CursorVisible = false; //to hide the cursor
 
             Map map = new Map();
-            map.CreateMap();
-            map.MapDisplay();
+            map.Create();
+            map.Display();
 
             //stat bar, activity log
             Console.SetCursorPosition(0, 25);
