@@ -2,13 +2,16 @@
 
 namespace DungeonMap
 {
-    public class Map
+    public class Map 
     {
         string Wall_X = "-";
         string Wall_Y = "|";
         string Floor = ".";
 
-        string[,] GameMap = new string[80, 25];
+        int PlayerPOSX { get; set; }
+        int PlayerPOSY { get; set; }
+
+        public string[,] GameMap = new string[80, 25];
 
         public void Display()
         {
@@ -21,6 +24,80 @@ namespace DungeonMap
                 }
             }
         }
+
+        public void MovePlayer(string _direction)
+        {
+            if (_direction == "Right")
+            {
+                if (GameMap[PlayerPOSX + 1, PlayerPOSY] != "|")
+                {
+                    GameMap[PlayerPOSX + 1, PlayerPOSY] = "@";
+                    GameMap[PlayerPOSX, PlayerPOSY] = ".";
+                    PlayerPOSX += 1;
+                    Console.SetCursorPosition(80, 0);
+                    Console.WriteLine($"Player Position: X{PlayerPOSX}, Y{PlayerPOSY}");
+                }
+            }
+            if (_direction == "Left")
+            {
+                if (GameMap[PlayerPOSX - 1, PlayerPOSY] != "|")
+                {
+                    GameMap[PlayerPOSX - 1, PlayerPOSY] = "@";
+                    GameMap[PlayerPOSX, PlayerPOSY] = ".";
+                    PlayerPOSX -= 1;
+                    Console.SetCursorPosition(80, 0);
+                    Console.WriteLine($"Player Position: X{PlayerPOSX}, Y{PlayerPOSY}");
+                }
+
+            }
+            if (_direction == "Up")
+            {
+                if (GameMap[PlayerPOSX, PlayerPOSY - 1] != "-")
+                {
+                    GameMap[PlayerPOSX, PlayerPOSY - 1] = "@";
+                    GameMap[PlayerPOSX, PlayerPOSY] = ".";
+                    PlayerPOSY -= 1;
+                    Console.SetCursorPosition(80, 0);
+                    Console.WriteLine($"Player Position: X{PlayerPOSX}, Y{PlayerPOSY}");
+                }
+            }
+            if (_direction == "Down")
+            {
+                if (GameMap[PlayerPOSX, PlayerPOSY + 1] != "-")
+                {
+                    GameMap[PlayerPOSX, PlayerPOSY + 1] = "@";
+                    GameMap[PlayerPOSX, PlayerPOSY] = ".";
+                    PlayerPOSY += 1;
+                    Console.SetCursorPosition(80, 0);
+                    Console.WriteLine($"Player Position: X{PlayerPOSX}, Y{PlayerPOSY}");
+                }
+            }
+
+        }
+
+
+
+        public void PlacePlayer()
+        {
+            int _placed = 0;
+            
+            for (int x = 0; x <= 79; x++)
+            {
+                for (int y = 0; y <= 24; y++)
+                {
+                    if (GameMap[x, y] == "." && _placed == 0)
+                    {
+                        GameMap[x, y] = "@";
+                        PlayerPOSX = x;
+                        PlayerPOSY = y;
+                        _placed = 1;
+                        Console.SetCursorPosition(80, 0);
+                        Console.WriteLine($"Player Position: X{ x}, Y{y}");
+                    }
+                }
+            }
+        }
+
 
         public void Create()
         {

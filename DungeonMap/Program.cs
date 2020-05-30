@@ -11,8 +11,43 @@ namespace DungeonMap
 
             Map map = new Map();
             map.Create();
+
+            map.PlacePlayer();
+            
             map.Display();
 
+            StatBar();
+
+            bool _keepPlaying = true;
+            do
+            {
+                ConsoleKey aInput = Console.ReadKey().Key;
+                if (aInput == ConsoleKey.RightArrow)
+                {
+                    map.MovePlayer("Right");
+                    map.Display();
+                }
+                if (aInput == ConsoleKey.LeftArrow)
+                {
+                    map.MovePlayer("Left");
+                    map.Display();
+                }
+                if (aInput == ConsoleKey.UpArrow)
+                {
+                    map.MovePlayer("Up");
+                    map.Display();
+                }
+                if (aInput == ConsoleKey.DownArrow)
+                {
+                    map.MovePlayer("Down");
+                    map.Display();
+                }
+            } while (_keepPlaying);
+
+        }
+
+        static void StatBar()
+        {
             //stat bar, activity log
             Console.SetCursorPosition(0, 25);
             Console.WriteLine(("").PadRight(80, '*'));
