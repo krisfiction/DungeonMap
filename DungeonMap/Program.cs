@@ -2,9 +2,9 @@
 
 namespace DungeonMap
 {
-    class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        private static void Main()
         {
             Console.SetWindowSize(110, 36); //map will be 80, 25, giving 30 spaces on the side and 10 lines below
             Console.CursorVisible = false; //to hide the cursor
@@ -13,12 +13,12 @@ namespace DungeonMap
             map.Create();
 
             map.PlacePlayer();
-            
+
             map.Display();
 
             StatBar();
 
-            bool _keepPlaying = true;
+            const bool _keepPlaying = true;
             do
             {
                 ConsoleKey aInput = Console.ReadKey().Key;
@@ -63,10 +63,9 @@ namespace DungeonMap
                     map.Display();
                 }
             } while (_keepPlaying);
-
         }
 
-        static void StatBar()
+        private static void StatBar()
         {
             //stat bar, activity log
             Console.SetCursorPosition(0, 25);

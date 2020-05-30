@@ -146,8 +146,8 @@ namespace DungeonMap
         {
             Random random = new Random();
 
-            int RoomHeight = random.Next(6, 10);
-            int RoomWidth = random.Next(7, 10);
+            int RoomHeight = random.Next(4, 6);
+            int RoomWidth = random.Next(8, 24);
             int RoomPOSX = random.Next(0, 79 - RoomWidth - 1);
             int RoomPOSY = random.Next(0, 24 - RoomHeight - 1);
 
