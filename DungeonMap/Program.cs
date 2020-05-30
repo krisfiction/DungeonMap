@@ -22,24 +22,44 @@ namespace DungeonMap
             do
             {
                 ConsoleKey aInput = Console.ReadKey().Key;
-                if (aInput == ConsoleKey.RightArrow)
+                if (aInput == ConsoleKey.UpArrow || aInput == ConsoleKey.NumPad8)
                 {
-                    map.MovePlayer("Right");
+                    map.MovePlayer("North");
                     map.Display();
                 }
-                if (aInput == ConsoleKey.LeftArrow)
+                if (aInput == ConsoleKey.DownArrow || aInput == ConsoleKey.NumPad2)
                 {
-                    map.MovePlayer("Left");
+                    map.MovePlayer("South");
                     map.Display();
                 }
-                if (aInput == ConsoleKey.UpArrow)
+                if (aInput == ConsoleKey.RightArrow || aInput == ConsoleKey.NumPad6)
                 {
-                    map.MovePlayer("Up");
+                    map.MovePlayer("West");
                     map.Display();
                 }
-                if (aInput == ConsoleKey.DownArrow)
+                if (aInput == ConsoleKey.LeftArrow || aInput == ConsoleKey.NumPad4)
                 {
-                    map.MovePlayer("Down");
+                    map.MovePlayer("East");
+                    map.Display();
+                }
+                if (aInput == ConsoleKey.NumPad9)
+                {
+                    map.MovePlayer("NorthEast");
+                    map.Display();
+                }
+                if (aInput == ConsoleKey.NumPad7)
+                {
+                    map.MovePlayer("NorthWest");
+                    map.Display();
+                }
+                if (aInput == ConsoleKey.NumPad3)
+                {
+                    map.MovePlayer("SouthEast");
+                    map.Display();
+                }
+                if (aInput == ConsoleKey.NumPad1)
+                {
+                    map.MovePlayer("SouthWest");
                     map.Display();
                 }
             } while (_keepPlaying);

@@ -27,30 +27,7 @@ namespace DungeonMap
 
         public void MovePlayer(string _direction)
         {
-            if (_direction == "Right")
-            {
-                if (GameMap[PlayerPOSX + 1, PlayerPOSY] != "|")
-                {
-                    GameMap[PlayerPOSX + 1, PlayerPOSY] = "@";
-                    GameMap[PlayerPOSX, PlayerPOSY] = ".";
-                    PlayerPOSX += 1;
-                    Console.SetCursorPosition(80, 0);
-                    Console.WriteLine($"Player Position: X{PlayerPOSX}, Y{PlayerPOSY}");
-                }
-            }
-            if (_direction == "Left")
-            {
-                if (GameMap[PlayerPOSX - 1, PlayerPOSY] != "|")
-                {
-                    GameMap[PlayerPOSX - 1, PlayerPOSY] = "@";
-                    GameMap[PlayerPOSX, PlayerPOSY] = ".";
-                    PlayerPOSX -= 1;
-                    Console.SetCursorPosition(80, 0);
-                    Console.WriteLine($"Player Position: X{PlayerPOSX}, Y{PlayerPOSY}");
-                }
-
-            }
-            if (_direction == "Up")
+            if (_direction == "North")
             {
                 if (GameMap[PlayerPOSX, PlayerPOSY - 1] != "-")
                 {
@@ -61,7 +38,7 @@ namespace DungeonMap
                     Console.WriteLine($"Player Position: X{PlayerPOSX}, Y{PlayerPOSY}");
                 }
             }
-            if (_direction == "Down")
+            if (_direction == "South")
             {
                 if (GameMap[PlayerPOSX, PlayerPOSY + 1] != "-")
                 {
@@ -72,6 +49,80 @@ namespace DungeonMap
                     Console.WriteLine($"Player Position: X{PlayerPOSX}, Y{PlayerPOSY}");
                 }
             }
+            if (_direction == "West")
+            {
+                if (GameMap[PlayerPOSX + 1, PlayerPOSY] != "|")
+                {
+                    GameMap[PlayerPOSX + 1, PlayerPOSY] = "@";
+                    GameMap[PlayerPOSX, PlayerPOSY] = ".";
+                    PlayerPOSX += 1;
+                    Console.SetCursorPosition(80, 0);
+                    Console.WriteLine($"Player Position: X{PlayerPOSX}, Y{PlayerPOSY}");
+                }
+            }
+            if (_direction == "East")
+            {
+                if (GameMap[PlayerPOSX - 1, PlayerPOSY] != "|")
+                {
+                    GameMap[PlayerPOSX - 1, PlayerPOSY] = "@";
+                    GameMap[PlayerPOSX, PlayerPOSY] = ".";
+                    PlayerPOSX -= 1;
+                    Console.SetCursorPosition(80, 0);
+                    Console.WriteLine($"Player Position: X{PlayerPOSX}, Y{PlayerPOSY}");
+                }
+            }
+
+
+
+            if (_direction == "NorthWest")
+            {
+                if (GameMap[PlayerPOSX - 1, PlayerPOSY - 1] != "|" && GameMap[PlayerPOSX - 1, PlayerPOSY - 1] != "-")
+                {
+                    GameMap[PlayerPOSX - 1, PlayerPOSY - 1] = "@";
+                    GameMap[PlayerPOSX, PlayerPOSY] = ".";
+                    PlayerPOSX -= 1;
+                    PlayerPOSY -= 1;
+                    Console.SetCursorPosition(80, 0);
+                    Console.WriteLine($"Player Position: X{PlayerPOSX}, Y{PlayerPOSY}");
+                }
+            }
+            if (_direction == "NorthEast")
+            {
+                if (GameMap[PlayerPOSX + 1, PlayerPOSY - 1] != "|" && GameMap[PlayerPOSX + 1, PlayerPOSY - 1] != "-")
+                {
+                    GameMap[PlayerPOSX + 1, PlayerPOSY - 1] = "@";
+                    GameMap[PlayerPOSX, PlayerPOSY] = ".";
+                    PlayerPOSX += 1;
+                    PlayerPOSY -= 1;
+                    Console.SetCursorPosition(80, 0);
+                    Console.WriteLine($"Player Position: X{PlayerPOSX}, Y{PlayerPOSY}");
+                }
+            }
+            if (_direction == "SouthWest")
+            {
+                if (GameMap[PlayerPOSX - 1, PlayerPOSY + 1] != "|" && GameMap[PlayerPOSX - 1, PlayerPOSY + 1] != "-")
+                {
+                    GameMap[PlayerPOSX - 1, PlayerPOSY + 1] = "@";
+                    GameMap[PlayerPOSX, PlayerPOSY] = ".";
+                    PlayerPOSX -= 1;
+                    PlayerPOSY += 1;
+                    Console.SetCursorPosition(80, 0);
+                    Console.WriteLine($"Player Position: X{PlayerPOSX}, Y{PlayerPOSY}");
+                }
+            }
+            if (_direction == "SouthEast")
+            {
+                if (GameMap[PlayerPOSX + 1, PlayerPOSY + 1] != "|" && GameMap[PlayerPOSX + 1, PlayerPOSY + 1] != "-")
+                {
+                    GameMap[PlayerPOSX + 1, PlayerPOSY + 1] = "@";
+                    GameMap[PlayerPOSX, PlayerPOSY] = ".";
+                    PlayerPOSX += 1;
+                    PlayerPOSY += 1;
+                    Console.SetCursorPosition(80, 0);
+                    Console.WriteLine($"Player Position: X{PlayerPOSX}, Y{PlayerPOSY}");
+                }
+            }
+
 
         }
 
