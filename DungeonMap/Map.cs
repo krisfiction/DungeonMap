@@ -2,14 +2,14 @@
 
 namespace DungeonMap
 {
-    public class Map 
+    public class Map
     {
-        string Wall_X = "-";
-        string Wall_Y = "|";
-        string Floor = ".";
+        private readonly string Wall_X = "-";
+        private readonly string Wall_Y = "|";
+        private readonly string Floor = ".";
 
-        int PlayerPOSX { get; set; }
-        int PlayerPOSY { get; set; }
+        private int PlayerPOSX { get; set; }
+        private int PlayerPOSY { get; set; }
 
         public string[,] GameMap = new string[80, 25];
 
@@ -33,7 +33,7 @@ namespace DungeonMap
                 {
                     GameMap[PlayerPOSX, PlayerPOSY - 1] = "@";
                     GameMap[PlayerPOSX, PlayerPOSY] = ".";
-                    PlayerPOSY -= 1;
+                    PlayerPOSY--;
                     Console.SetCursorPosition(80, 0);
                     Console.WriteLine($"Player Position: X{PlayerPOSX}, Y{PlayerPOSY}");
                 }
@@ -44,7 +44,7 @@ namespace DungeonMap
                 {
                     GameMap[PlayerPOSX, PlayerPOSY + 1] = "@";
                     GameMap[PlayerPOSX, PlayerPOSY] = ".";
-                    PlayerPOSY += 1;
+                    PlayerPOSY++;
                     Console.SetCursorPosition(80, 0);
                     Console.WriteLine($"Player Position: X{PlayerPOSX}, Y{PlayerPOSY}");
                 }
@@ -55,7 +55,7 @@ namespace DungeonMap
                 {
                     GameMap[PlayerPOSX + 1, PlayerPOSY] = "@";
                     GameMap[PlayerPOSX, PlayerPOSY] = ".";
-                    PlayerPOSX += 1;
+                    PlayerPOSX++;
                     Console.SetCursorPosition(80, 0);
                     Console.WriteLine($"Player Position: X{PlayerPOSX}, Y{PlayerPOSY}");
                 }
@@ -66,22 +66,19 @@ namespace DungeonMap
                 {
                     GameMap[PlayerPOSX - 1, PlayerPOSY] = "@";
                     GameMap[PlayerPOSX, PlayerPOSY] = ".";
-                    PlayerPOSX -= 1;
+                    PlayerPOSX--;
                     Console.SetCursorPosition(80, 0);
                     Console.WriteLine($"Player Position: X{PlayerPOSX}, Y{PlayerPOSY}");
                 }
             }
-
-
-
             if (_direction == "NorthWest")
             {
                 if (GameMap[PlayerPOSX - 1, PlayerPOSY - 1] != "|" && GameMap[PlayerPOSX - 1, PlayerPOSY - 1] != "-")
                 {
                     GameMap[PlayerPOSX - 1, PlayerPOSY - 1] = "@";
                     GameMap[PlayerPOSX, PlayerPOSY] = ".";
-                    PlayerPOSX -= 1;
-                    PlayerPOSY -= 1;
+                    PlayerPOSX--;
+                    PlayerPOSY--;
                     Console.SetCursorPosition(80, 0);
                     Console.WriteLine($"Player Position: X{PlayerPOSX}, Y{PlayerPOSY}");
                 }
@@ -92,8 +89,8 @@ namespace DungeonMap
                 {
                     GameMap[PlayerPOSX + 1, PlayerPOSY - 1] = "@";
                     GameMap[PlayerPOSX, PlayerPOSY] = ".";
-                    PlayerPOSX += 1;
-                    PlayerPOSY -= 1;
+                    PlayerPOSX++;
+                    PlayerPOSY--;
                     Console.SetCursorPosition(80, 0);
                     Console.WriteLine($"Player Position: X{PlayerPOSX}, Y{PlayerPOSY}");
                 }
@@ -104,8 +101,8 @@ namespace DungeonMap
                 {
                     GameMap[PlayerPOSX - 1, PlayerPOSY + 1] = "@";
                     GameMap[PlayerPOSX, PlayerPOSY] = ".";
-                    PlayerPOSX -= 1;
-                    PlayerPOSY += 1;
+                    PlayerPOSX--;
+                    PlayerPOSY++;
                     Console.SetCursorPosition(80, 0);
                     Console.WriteLine($"Player Position: X{PlayerPOSX}, Y{PlayerPOSY}");
                 }
@@ -116,22 +113,18 @@ namespace DungeonMap
                 {
                     GameMap[PlayerPOSX + 1, PlayerPOSY + 1] = "@";
                     GameMap[PlayerPOSX, PlayerPOSY] = ".";
-                    PlayerPOSX += 1;
-                    PlayerPOSY += 1;
+                    PlayerPOSX++;
+                    PlayerPOSY++;
                     Console.SetCursorPosition(80, 0);
                     Console.WriteLine($"Player Position: X{PlayerPOSX}, Y{PlayerPOSY}");
                 }
             }
-
-
         }
-
-
 
         public void PlacePlayer()
         {
             int _placed = 0;
-            
+
             for (int x = 0; x <= 79; x++)
             {
                 for (int y = 0; y <= 24; y++)
@@ -148,7 +141,6 @@ namespace DungeonMap
                 }
             }
         }
-
 
         public void Create()
         {
@@ -175,10 +167,8 @@ namespace DungeonMap
                     {
                         GameMap[RoomPOSX + x, RoomPOSY + y] = Floor;
                     }
-
                 }
             }
         }
-
     }
 }
