@@ -137,15 +137,11 @@ namespace DungeonMap
             }
         }
 
-
         public void DisplayPlayerPosition(int _x, int _y)
         {
             Console.SetCursorPosition(110, 0);
             Console.WriteLine($"Player Position: x{ _x}, y{_y}");
         }
-
-
-
 
         public void Create()
         {
