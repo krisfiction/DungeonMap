@@ -154,11 +154,14 @@ namespace DungeonMap
             int RoomHeight = random.Next(3, 7);
             int RoomWidth = random.Next(3, 25);
 
-            Console.SetCursorPosition(110, 2);
+            Console.SetCursorPosition(110, 3);
             Console.WriteLine($"Room Width: x{RoomWidth}, Hight: y{RoomHeight}");
 
             int RoomPOSX = random.Next(0, MapSizeX - 1 - RoomWidth);
             int RoomPOSY = random.Next(0, MapSizeY - 1 - RoomHeight);
+
+            Console.SetCursorPosition(110, 2);
+            Console.WriteLine($"Room Location: x{RoomPOSX}, y{RoomPOSY}");
 
             for (int y = 0; y <= RoomHeight; y++)
             {
