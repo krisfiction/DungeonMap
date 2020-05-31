@@ -6,7 +6,7 @@ namespace DungeonMap
     {
         private static void Main()
         {
-            Console.SetWindowSize(110, 36); //map will be 80, 25, giving 30 spaces on the side and 10 lines below
+            Console.SetWindowSize(140, 46); //map will be 110x35, giving 30 spaces on the side and 10 lines below (+1 to prevent scroll on window)
             Console.CursorVisible = false; //to hide the cursor
 
             Map map = new Map();
@@ -68,8 +68,8 @@ namespace DungeonMap
         private static void StatBar()
         {
             //stat bar, activity log
-            Console.SetCursorPosition(0, 25);
-            Console.WriteLine(("").PadRight(80, '*'));
+            Console.SetCursorPosition(0, 35);
+            Console.WriteLine(("").PadRight(140, '*'));
             Console.WriteLine("Stat Bar / Activity Log Here");
             Console.WriteLine(("").PadRight(80, '*'));
             Console.WriteLine(("").PadRight(80, '*'));
@@ -78,7 +78,7 @@ namespace DungeonMap
             Console.WriteLine(("").PadRight(80, '*'));
             Console.WriteLine(("").PadRight(80, '*'));
             Console.WriteLine("10 lines of space to work with currently.");
-            Console.WriteLine(("").PadRight(80, '*'));
+            Console.WriteLine(("").PadRight(140, '*'));
             Console.ReadKey();
         }
     }
