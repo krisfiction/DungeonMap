@@ -147,8 +147,8 @@ namespace DungeonMap
         {
             Random random = new Random();
 
-            int RoomHeight = random.Next(3, 7);
-            int RoomWidth = random.Next(3, 25);
+            int RoomHeight = random.Next(3, 10);
+            int RoomWidth = random.Next(3, 35);
 
             Console.SetCursorPosition(110, 3);
             Console.WriteLine($"Room Width: x{RoomWidth}, Hight: y{RoomHeight}");
