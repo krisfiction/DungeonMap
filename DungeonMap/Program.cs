@@ -10,6 +10,12 @@ namespace DungeonMap
             Console.CursorVisible = false; //to hide the cursor
             Console.Clear();
 
+
+            Console.SetCursorPosition(110, 34);
+            Console.WriteLine(("").PadLeft(30, '#'));
+         
+
+
             Map map = new Map();
             map.CreateRoom();
             map.CreateRoom();
@@ -26,6 +32,8 @@ namespace DungeonMap
             map.Display();
 
             StatBar();
+
+
 
             const bool _keepPlaying = true;
             do

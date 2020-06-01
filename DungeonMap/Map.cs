@@ -31,6 +31,7 @@ namespace DungeonMap
             }
         }
 
+        //todo maybe check if next tile is floor instead of checking if next tile is not a wall
         public void MovePlayer(string _direction)
         {
             if (_direction == "North")
@@ -40,7 +41,7 @@ namespace DungeonMap
                     GameMap[PlayerPOSX, PlayerPOSY - 1] = PlayerIcon;
                     GameMap[PlayerPOSX, PlayerPOSY] = Floor;
                     PlayerPOSY--;
-                    DisplayPlayerPosition(PlayerPOSX, PlayerPOSY);
+                    DisplayPlayerPosition();
                 }
             }
             if (_direction == "South")
@@ -50,7 +51,7 @@ namespace DungeonMap
                     GameMap[PlayerPOSX, PlayerPOSY + 1] = PlayerIcon;
                     GameMap[PlayerPOSX, PlayerPOSY] = Floor;
                     PlayerPOSY++;
-                    DisplayPlayerPosition(PlayerPOSX, PlayerPOSY);
+                    DisplayPlayerPosition();
                 }
             }
             if (_direction == "West")
@@ -60,7 +61,7 @@ namespace DungeonMap
                     GameMap[PlayerPOSX + 1, PlayerPOSY] = PlayerIcon;
                     GameMap[PlayerPOSX, PlayerPOSY] = Floor;
                     PlayerPOSX++;
-                    DisplayPlayerPosition(PlayerPOSX, PlayerPOSY);
+                    DisplayPlayerPosition();
                 }
             }
             if (_direction == "East")
@@ -70,7 +71,7 @@ namespace DungeonMap
                     GameMap[PlayerPOSX - 1, PlayerPOSY] = PlayerIcon;
                     GameMap[PlayerPOSX, PlayerPOSY] = Floor;
                     PlayerPOSX--;
-                    DisplayPlayerPosition(PlayerPOSX, PlayerPOSY);
+                    DisplayPlayerPosition();
                 }
             }
             if (_direction == "NorthWest")
@@ -81,7 +82,7 @@ namespace DungeonMap
                     GameMap[PlayerPOSX, PlayerPOSY] = Floor;
                     PlayerPOSX--;
                     PlayerPOSY--;
-                    DisplayPlayerPosition(PlayerPOSX, PlayerPOSY);
+                    DisplayPlayerPosition();
                 }
             }
             if (_direction == "NorthEast")
@@ -92,7 +93,7 @@ namespace DungeonMap
                     GameMap[PlayerPOSX, PlayerPOSY] = Floor;
                     PlayerPOSX++;
                     PlayerPOSY--;
-                    DisplayPlayerPosition(PlayerPOSX, PlayerPOSY);
+                    DisplayPlayerPosition();
                 }
             }
             if (_direction == "SouthWest")
@@ -103,7 +104,7 @@ namespace DungeonMap
                     GameMap[PlayerPOSX, PlayerPOSY] = Floor;
                     PlayerPOSX--;
                     PlayerPOSY++;
-                    DisplayPlayerPosition(PlayerPOSX, PlayerPOSY);
+                    DisplayPlayerPosition();
                 }
             }
             if (_direction == "SouthEast")
@@ -114,7 +115,7 @@ namespace DungeonMap
                     GameMap[PlayerPOSX, PlayerPOSY] = Floor;
                     PlayerPOSX++;
                     PlayerPOSY++;
-                    DisplayPlayerPosition(PlayerPOSX, PlayerPOSY);
+                    DisplayPlayerPosition();
                 }
             }
         }
@@ -133,29 +134,29 @@ namespace DungeonMap
                         PlayerPOSX = x;
                         PlayerPOSY = y;
                         _placed = 1;
-                        DisplayPlayerPosition(PlayerPOSX, PlayerPOSY);
+                        DisplayPlayerPosition();
                     }
                 }
             }
         }
 
-        public void DisplayPlayerPosition(int _x, int _y)
+        public void DisplayPlayerPosition()
         {
             Console.SetCursorPosition(110, 0);
-            Console.WriteLine($"Player Position: x{ _x}, y{_y}");
+            Console.WriteLine($"Player Position: x{PlayerPOSX}, y{PlayerPOSY}");
         }
 
         public void CreateRoom()
         {
             Random random = new Random();
 
-            int RoomHeight = random.Next(3, 10);
-            int RoomWidth = random.Next(3, 35);
+            int RoomHeight = random.Next(3, 9);
+            int RoomWidth = random.Next(3, 34);
 
             int RoomPOSX = random.Next(0, MapSizeX - 1 - RoomWidth);
             int RoomPOSY = random.Next(0, MapSizeY - 1 - RoomHeight);
 
-            DisplayRoomInfo(RoomWidth, RoomHeight, RoomPOSX, RoomPOSY);
+            DisplayRoomInfo(RoomWidth + 1, RoomHeight + 1, RoomPOSX, RoomPOSY);
 
             for (int y = 0; y <= RoomHeight; y++)
             {
@@ -182,6 +183,7 @@ namespace DungeonMap
                     }
                 }
             }
+
             RoomNumber++;
         }
 
