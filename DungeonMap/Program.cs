@@ -8,9 +8,24 @@ namespace DungeonMap
         {
             Console.SetWindowSize(140, 46); //map will be 110x35, giving 30 spaces on the side and 10 lines below (+1 to prevent scroll on window)
             Console.CursorVisible = false; //to hide the cursor
+            Console.Clear();
+
+
+            Console.SetCursorPosition(110, 34);
+            Console.WriteLine(("").PadLeft(30, '#'));
+         
+
 
             Map map = new Map();
-            map.Create();
+            map.CreateRoom();
+            map.CreateRoom();
+            map.CreateRoom();
+            map.CreateRoom();
+            //map.CreateRoom();
+            //map.CreateRoom();
+            //map.CreateRoom();
+            //map.CreateRoom();
+            //map.CreateRoom();
 
             map.PlacePlayer();
 
@@ -18,10 +33,17 @@ namespace DungeonMap
 
             StatBar();
 
+
+
             const bool _keepPlaying = true;
             do
             {
                 ConsoleKey aInput = Console.ReadKey().Key;
+                if (aInput == ConsoleKey.F5) //reload for testing
+                {
+                    Array.Clear(map.GameMap, 0, map.GameMap.Length);
+                    Main();
+                }
                 if (aInput == ConsoleKey.UpArrow || aInput == ConsoleKey.NumPad8)
                 {
                     map.MovePlayer("North");

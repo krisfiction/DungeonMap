@@ -17,6 +17,8 @@ namespace DungeonMap
 
         public string[,] GameMap = new string[MapSizeX, MapSizeY];
 
+        private int RoomNumber = 1;
+
         public void Display()
         {
             for (int x = 0; x <= MapSizeX - 1; x++)
@@ -29,46 +31,47 @@ namespace DungeonMap
             }
         }
 
+        //todo maybe check if next tile is floor instead of checking if next tile is not a wall
         public void MovePlayer(string _direction)
         {
             if (_direction == "North")
             {
-                if (GameMap[PlayerPOSX, PlayerPOSY - 1] != Wall_X)
+                if (GameMap[PlayerPOSX, PlayerPOSY - 1] != Wall_X && GameMap[PlayerPOSX, PlayerPOSY - 1] != Wall_Y)
                 {
                     GameMap[PlayerPOSX, PlayerPOSY - 1] = PlayerIcon;
                     GameMap[PlayerPOSX, PlayerPOSY] = Floor;
                     PlayerPOSY--;
-                    DisplayPlayerPosition(PlayerPOSX, PlayerPOSY);
+                    DisplayPlayerPosition();
                 }
             }
             if (_direction == "South")
             {
-                if (GameMap[PlayerPOSX, PlayerPOSY + 1] != Wall_X)
+                if (GameMap[PlayerPOSX, PlayerPOSY + 1] != Wall_X && GameMap[PlayerPOSX, PlayerPOSY + 1] != Wall_Y)
                 {
                     GameMap[PlayerPOSX, PlayerPOSY + 1] = PlayerIcon;
                     GameMap[PlayerPOSX, PlayerPOSY] = Floor;
                     PlayerPOSY++;
-                    DisplayPlayerPosition(PlayerPOSX, PlayerPOSY);
+                    DisplayPlayerPosition();
                 }
             }
             if (_direction == "West")
             {
-                if (GameMap[PlayerPOSX + 1, PlayerPOSY] != Wall_Y)
+                if (GameMap[PlayerPOSX + 1, PlayerPOSY] != Wall_Y && GameMap[PlayerPOSX + 1, PlayerPOSY] != Wall_X)
                 {
                     GameMap[PlayerPOSX + 1, PlayerPOSY] = PlayerIcon;
                     GameMap[PlayerPOSX, PlayerPOSY] = Floor;
                     PlayerPOSX++;
-                    DisplayPlayerPosition(PlayerPOSX, PlayerPOSY);
+                    DisplayPlayerPosition();
                 }
             }
             if (_direction == "East")
             {
-                if (GameMap[PlayerPOSX - 1, PlayerPOSY] != Wall_Y)
+                if (GameMap[PlayerPOSX - 1, PlayerPOSY] != Wall_Y && GameMap[PlayerPOSX - 1, PlayerPOSY] != Wall_X)
                 {
                     GameMap[PlayerPOSX - 1, PlayerPOSY] = PlayerIcon;
                     GameMap[PlayerPOSX, PlayerPOSY] = Floor;
                     PlayerPOSX--;
-                    DisplayPlayerPosition(PlayerPOSX, PlayerPOSY);
+                    DisplayPlayerPosition();
                 }
             }
             if (_direction == "NorthWest")
@@ -79,7 +82,7 @@ namespace DungeonMap
                     GameMap[PlayerPOSX, PlayerPOSY] = Floor;
                     PlayerPOSX--;
                     PlayerPOSY--;
-                    DisplayPlayerPosition(PlayerPOSX, PlayerPOSY);
+                    DisplayPlayerPosition();
                 }
             }
             if (_direction == "NorthEast")
@@ -90,7 +93,7 @@ namespace DungeonMap
                     GameMap[PlayerPOSX, PlayerPOSY] = Floor;
                     PlayerPOSX++;
                     PlayerPOSY--;
-                    DisplayPlayerPosition(PlayerPOSX, PlayerPOSY);
+                    DisplayPlayerPosition();
                 }
             }
             if (_direction == "SouthWest")
@@ -101,7 +104,7 @@ namespace DungeonMap
                     GameMap[PlayerPOSX, PlayerPOSY] = Floor;
                     PlayerPOSX--;
                     PlayerPOSY++;
-                    DisplayPlayerPosition(PlayerPOSX, PlayerPOSY);
+                    DisplayPlayerPosition();
                 }
             }
             if (_direction == "SouthEast")
@@ -112,7 +115,7 @@ namespace DungeonMap
                     GameMap[PlayerPOSX, PlayerPOSY] = Floor;
                     PlayerPOSX++;
                     PlayerPOSY++;
-                    DisplayPlayerPosition(PlayerPOSX, PlayerPOSY);
+                    DisplayPlayerPosition();
                 }
             }
         }
@@ -131,33 +134,29 @@ namespace DungeonMap
                         PlayerPOSX = x;
                         PlayerPOSY = y;
                         _placed = 1;
-                        DisplayPlayerPosition(PlayerPOSX, PlayerPOSY);
+                        DisplayPlayerPosition();
                     }
                 }
             }
         }
 
-        public void DisplayPlayerPosition(int _x, int _y)
+        public void DisplayPlayerPosition()
         {
             Console.SetCursorPosition(110, 0);
-            Console.WriteLine($"Player Position: x{ _x}, y{_y}");
+            Console.WriteLine($"Player Position: x{PlayerPOSX}, y{PlayerPOSY}");
         }
 
-        public void Create()
+        public void CreateRoom()
         {
             Random random = new Random();
 
-            int RoomHeight = random.Next(3, 10);
-            int RoomWidth = random.Next(3, 35);
-
-            Console.SetCursorPosition(110, 3);
-            Console.WriteLine($"Room Width: x{RoomWidth}, Hight: y{RoomHeight}");
+            int RoomHeight = random.Next(3, 9);
+            int RoomWidth = random.Next(3, 34);
 
             int RoomPOSX = random.Next(0, MapSizeX - 1 - RoomWidth);
             int RoomPOSY = random.Next(0, MapSizeY - 1 - RoomHeight);
 
-            Console.SetCursorPosition(110, 2);
-            Console.WriteLine($"Room Location: x{RoomPOSX}, y{RoomPOSY}");
+            DisplayRoomInfo(RoomWidth + 1, RoomHeight + 1, RoomPOSX, RoomPOSY);
 
             for (int y = 0; y <= RoomHeight; y++)
             {
@@ -165,7 +164,14 @@ namespace DungeonMap
                 {
                     if (y == 0 || y == RoomHeight)
                     {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = Wall_X;
+                        if (y == 0 && x == 0) // testing - to number each room
+                        {
+                            GameMap[RoomPOSX + x, RoomPOSY + y] = RoomNumber.ToString();
+                        }
+                        else
+                        {
+                            GameMap[RoomPOSX + x, RoomPOSY + y] = Wall_X;
+                        }
                     }
                     else if (x == 0 || x == RoomWidth)
                     {
@@ -176,6 +182,84 @@ namespace DungeonMap
                         GameMap[RoomPOSX + x, RoomPOSY + y] = Floor;
                     }
                 }
+            }
+
+            RoomNumber++;
+        }
+
+        public void DisplayRoomInfo(int RoomWidth, int RoomHeight, int RoomPOSX, int RoomPOSY)
+        {
+            if (RoomNumber == 1)
+            {
+                Console.SetCursorPosition(110, 2);
+                Console.WriteLine($"Room {RoomNumber} Location: x{RoomPOSX}, y{RoomPOSY}");
+
+                Console.SetCursorPosition(110, 3);
+                Console.WriteLine($"Room {RoomNumber} Width: x{RoomWidth}, Hight: y{RoomHeight}");
+            }
+            if (RoomNumber == 2)
+            {
+                Console.SetCursorPosition(110, 5);
+                Console.WriteLine($"Room {RoomNumber} Location: x{RoomPOSX}, y{RoomPOSY}");
+
+                Console.SetCursorPosition(110, 6);
+                Console.WriteLine($"Room {RoomNumber} Width: x{RoomWidth}, Hight: y{RoomHeight}");
+            }
+            if (RoomNumber == 3)
+            {
+                Console.SetCursorPosition(110, 8);
+                Console.WriteLine($"Room {RoomNumber} Location: x{RoomPOSX}, y{RoomPOSY}");
+
+                Console.SetCursorPosition(110, 9);
+                Console.WriteLine($"Room {RoomNumber} Width: x{RoomWidth}, Hight: y{RoomHeight}");
+            }
+            if (RoomNumber == 4)
+            {
+                Console.SetCursorPosition(110, 11);
+                Console.WriteLine($"Room {RoomNumber} Location: x{RoomPOSX}, y{RoomPOSY}");
+
+                Console.SetCursorPosition(110, 12);
+                Console.WriteLine($"Room {RoomNumber} Width: x{RoomWidth}, Hight: y{RoomHeight}");
+            }
+            if (RoomNumber == 5)
+            {
+                Console.SetCursorPosition(110, 14);
+                Console.WriteLine($"Room {RoomNumber} Location: x{RoomPOSX}, y{RoomPOSY}");
+
+                Console.SetCursorPosition(110, 15);
+                Console.WriteLine($"Room {RoomNumber} Width: x{RoomWidth}, Hight: y{RoomHeight}");
+            }
+            if (RoomNumber == 6)
+            {
+                Console.SetCursorPosition(110, 17);
+                Console.WriteLine($"Room {RoomNumber} Location: x{RoomPOSX}, y{RoomPOSY}");
+
+                Console.SetCursorPosition(110, 18);
+                Console.WriteLine($"Room {RoomNumber} Width: x{RoomWidth}, Hight: y{RoomHeight}");
+            }
+            if (RoomNumber == 7)
+            {
+                Console.SetCursorPosition(110, 20);
+                Console.WriteLine($"Room {RoomNumber} Location: x{RoomPOSX}, y{RoomPOSY}");
+
+                Console.SetCursorPosition(110, 21);
+                Console.WriteLine($"Room {RoomNumber} Width: x{RoomWidth}, Hight: y{RoomHeight}");
+            }
+            if (RoomNumber == 8)
+            {
+                Console.SetCursorPosition(110, 23);
+                Console.WriteLine($"Room {RoomNumber} Location: x{RoomPOSX}, y{RoomPOSY}");
+
+                Console.SetCursorPosition(110, 24);
+                Console.WriteLine($"Room {RoomNumber} Width: x{RoomWidth}, Hight: y{RoomHeight}");
+            }
+            if (RoomNumber == 9)
+            {
+                Console.SetCursorPosition(110, 26);
+                Console.WriteLine($"Room {RoomNumber} Location: x{RoomPOSX}, y{RoomPOSY}");
+
+                Console.SetCursorPosition(110, 27);
+                Console.WriteLine($"Room {RoomNumber} Width: x{RoomWidth}, Hight: y{RoomHeight}");
             }
         }
     }
