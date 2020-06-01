@@ -207,6 +207,26 @@ namespace DungeonMap
             RoomNumber++;
         }
 
+
+        public void RoomCollision()
+        {
+            for (int x = 1; x <= MapSizeX - 2; x++)
+            {
+                for (int y = 1; y <= MapSizeY - 2; y++)
+                {
+                    if (GameMap[x + 1, y] == Floor && GameMap[x - 1, y] == Floor)
+                    {
+                        GameMap[x, y] = Floor;
+                    }
+                    if (GameMap[x, y + 1] == Floor && GameMap[x, y - 1] == Floor)
+                    {
+                        GameMap[x, y] = Floor;
+                    }
+                }
+            }
+
+        }
+
         public void DisplayRoomInfo(int RoomWidth, int RoomHeight, int RoomPOSX, int RoomPOSY)
         {
             if (RoomNumber == 1)
