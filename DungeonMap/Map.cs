@@ -4,9 +4,14 @@ namespace DungeonMap
 {
     public class Map
     {
-        private readonly string Wall_X = "-";
-        private readonly string Wall_Y = "|";
+        private readonly string Wall_X = "═";
+        private readonly string Wall_Y = "║";
         private readonly string Floor = ".";
+
+        public string NEcorner = "╔";
+        public string NWcorner = "╗";
+        public string SEcorner = "╚";
+        public string SWcorner = "╝";
 
         private int PlayerPOSX { get; set; }
         private int PlayerPOSY { get; set; }
@@ -122,22 +127,23 @@ namespace DungeonMap
 
         public void PlacePlayer()
         {
+            Random random = new Random();
             int _placed = 0;
 
-            for (int x = 0; x <= MapSizeX - 1; x++)
+            do
             {
-                for (int y = 0; y <= MapSizeY - 1; y++)
+                int _randX = random.Next(0, MapSizeX);
+                int _randY = random.Next(0, MapSizeY);
+
+                if (GameMap[_randX, _randY] == Floor && _placed == 0)
                 {
-                    if (GameMap[x, y] == Floor && _placed == 0)
-                    {
-                        GameMap[x, y] = PlayerIcon;
-                        PlayerPOSX = x;
-                        PlayerPOSY = y;
-                        _placed = 1;
-                        DisplayPlayerPosition();
-                    }
+                    GameMap[_randX, _randY] = PlayerIcon;
+                    PlayerPOSX = _randX;
+                    PlayerPOSY = _randY;
+                    _placed = 1;
+                    DisplayPlayerPosition();
                 }
-            }
+            } while (_placed == 0);
         }
 
 
@@ -155,7 +161,6 @@ namespace DungeonMap
                 {
                     GameMap[_randX, _randY] = "M";
                     _placed = 1;
-
                 }
             } while (_placed == 0);
         }
@@ -184,11 +189,11 @@ namespace DungeonMap
                 {
                     if (y == 0 || y == RoomHeight)
                     {
-                        if (y == 0 && x == 0) // testing - to number each room
-                        {
-                            GameMap[RoomPOSX + x, RoomPOSY + y] = RoomNumber.ToString();
-                        }
-                        else
+                        //if (y == 0 && x == 0) // testing - to number each room
+                        //{
+                        //    GameMap[RoomPOSX + x, RoomPOSY + y] = RoomNumber.ToString();
+                        //}
+                        //else
                         {
                             GameMap[RoomPOSX + x, RoomPOSY + y] = Wall_X;
                         }
@@ -224,7 +229,33 @@ namespace DungeonMap
                     }
                 }
             }
+        }
 
+        // needs work, outer frame of map - out of range error
+        public void FixCorners()
+        {
+            for (int x = 1; x <= MapSizeX - 2; x++)
+            {
+                for (int y = 1; y <= MapSizeY - 2; y++)
+                {
+                    if (GameMap[x, y + 1] == Wall_Y && GameMap[x + 1, y] == Wall_X)
+                    {
+                        GameMap[x, y] = NEcorner;
+                    }
+                    if (GameMap[x - 1, y] == Wall_X && GameMap[x, y + 1] == Wall_Y)
+                    {
+                        GameMap[x, y] = NWcorner;
+                    }
+                    if (GameMap[x, y - 1] == Wall_Y && GameMap[x + 1, y] == Wall_X)
+                    {
+                        GameMap[x, y] = SEcorner;
+                    }
+                    if (GameMap[x, y - 1] == Wall_Y && GameMap[x - 1, y] == Wall_X)
+                    {
+                        GameMap[x, y] = SWcorner;
+                    }
+                }
+            }
         }
 
         public void DisplayRoomInfo(int RoomWidth, int RoomHeight, int RoomPOSX, int RoomPOSY)

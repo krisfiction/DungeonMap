@@ -28,6 +28,7 @@ namespace DungeonMap
             //map.CreateRoom();
 
             map.RoomCollision();
+            map.FixCorners();
 
             map.PlacePlayer();
 
