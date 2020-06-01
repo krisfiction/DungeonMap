@@ -140,6 +140,26 @@ namespace DungeonMap
             }
         }
 
+
+        public void PlaceMonster()
+        {
+            Random random = new Random();
+            int _placed = 0;
+
+            do
+            {
+                int _randX = random.Next(0, MapSizeX);
+                int _randY = random.Next(0, MapSizeY);
+
+                if (GameMap[_randX, _randY] == Floor && _placed == 0)
+                {
+                    GameMap[_randX, _randY] = "M";
+                    _placed = 1;
+
+                }
+            } while (_placed == 0);
+        }
+
         public void DisplayPlayerPosition()
         {
             Console.SetCursorPosition(110, 0);

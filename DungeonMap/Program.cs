@@ -29,6 +29,8 @@ namespace DungeonMap
 
             map.PlacePlayer();
 
+            map.PlaceMonster();
+
             map.Display();
 
             StatBar();
