@@ -332,6 +332,14 @@ namespace DungeonMap
                 Console.SetCursorPosition(110, 27);
                 Console.WriteLine($"Room {RoomNumber} Width: x{RoomWidth}, Hight: y{RoomHeight}");
             }
+            if (RoomNumber == 10)
+            {
+                Console.SetCursorPosition(110, 29);
+                Console.WriteLine($"Room {RoomNumber} Location: x{RoomPOSX}, y{RoomPOSY}");
+
+                Console.SetCursorPosition(110, 30);
+                Console.WriteLine($"Room {RoomNumber} Width: x{RoomWidth}, Hight: y{RoomHeight}");
+            }
         }
     }
 }

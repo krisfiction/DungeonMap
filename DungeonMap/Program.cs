@@ -21,11 +21,12 @@ namespace DungeonMap
             map.CreateRoom();
             map.CreateRoom();
             map.CreateRoom();
-            //map.CreateRoom();
-            //map.CreateRoom();
-            //map.CreateRoom();
-            //map.CreateRoom();
-            //map.CreateRoom();
+            map.CreateRoom();
+            map.CreateRoom();
+            map.CreateRoom();
+            map.CreateRoom();
+            map.CreateRoom();
+            map.CreateRoom();
 
             map.RoomCollision();
             map.FixCorners();
