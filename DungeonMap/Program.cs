@@ -17,17 +17,22 @@ namespace DungeonMap
 
 
             Map map = new Map();
-            map.CreateRoom();
-            map.CreateRoom();
-            map.CreateRoom();
-            map.CreateRoom();
-            //map.CreateRoom();
-            //map.CreateRoom();
-            //map.CreateRoom();
-            //map.CreateRoom();
-            //map.CreateRoom();
 
-            map.RoomCollision();
+            map.FillMap();
+
+            map.CreateRoom();
+            map.CreateRoom();
+            map.CreateRoom();
+            map.CreateRoom();
+            map.CreateRoom();
+            map.CreateRoom();
+            map.CreateRoom();
+            map.CreateRoom();
+            map.CreateRoom();
+            map.CreateRoom();
+
+            //map.RoomCollision();
+            //map.FixCorners();
 
             map.PlacePlayer();
 
@@ -46,7 +51,7 @@ namespace DungeonMap
                 ConsoleKey aInput = Console.ReadKey().Key;
                 if (aInput == ConsoleKey.F5) //reload for testing
                 {
-                    Array.Clear(map.GameMap, 0, map.GameMap.Length);
+                    //Array.Clear(map.GameMap, 0, map.GameMap.Length);
                     Main();
                 }
                 if (aInput == ConsoleKey.UpArrow || aInput == ConsoleKey.NumPad8)
@@ -61,12 +66,12 @@ namespace DungeonMap
                 }
                 if (aInput == ConsoleKey.RightArrow || aInput == ConsoleKey.NumPad6)
                 {
-                    map.MovePlayer("West");
+                    map.MovePlayer("East");
                     map.Display();
                 }
                 if (aInput == ConsoleKey.LeftArrow || aInput == ConsoleKey.NumPad4)
                 {
-                    map.MovePlayer("East");
+                    map.MovePlayer("West");
                     map.Display();
                 }
                 if (aInput == ConsoleKey.NumPad9)
