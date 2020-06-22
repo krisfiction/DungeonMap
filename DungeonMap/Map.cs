@@ -8,10 +8,10 @@ namespace DungeonMap
         private readonly string Wall_Y = "║";
         private readonly string Floor = ".";
 
-        public string NEcorner = "╔";
-        public string NWcorner = "╗";
-        public string SEcorner = "╚";
-        public string SWcorner = "╝";
+        public string NWcorner = "╔";
+        public string NEcorner = "╗";
+        public string SWcorner = "╚";
+        public string SEcorner = "╝";
 
         private int PlayerPOSX { get; set; }
         private int PlayerPOSY { get; set; }
@@ -20,9 +20,21 @@ namespace DungeonMap
         private const int MapSizeX = 110;
         private const int MapSizeY = 35;
 
-        public string[,] GameMap = new string[MapSizeX, MapSizeY];
+        private readonly Tile[,] GameMap = new Tile[MapSizeX, MapSizeY];
 
         private int RoomNumber = 1;
+
+
+        public void FillMap()
+        {
+            for (int x = 0; x <= MapSizeX - 1; x++)
+            {
+                for (int y = 0; y <= MapSizeY - 1; y++)
+                {
+                    GameMap[x, y] = new Tile(x, y, " ", false);
+                }
+            }
+        }
 
         public void Display()
         {
@@ -30,8 +42,11 @@ namespace DungeonMap
             {
                 for (int y = 0; y <= MapSizeY - 1; y++)
                 {
+                    Tile CurrentTile = (Tile)GameMap[x, y];
+                    string _icon = CurrentTile.Icon;
+
                     Console.SetCursorPosition(x, y);
-                    Console.Write(GameMap[x, y]);
+                    Console.WriteLine(_icon);
                 }
             }
         }
@@ -41,50 +56,65 @@ namespace DungeonMap
         {
             if (_direction == "North")
             {
-                if (GameMap[PlayerPOSX, PlayerPOSY - 1] != Wall_X && GameMap[PlayerPOSX, PlayerPOSY - 1] != Wall_Y)
+                Tile CurrentTile = (Tile)GameMap[PlayerPOSX, PlayerPOSY];
+                Tile NextTile = (Tile)GameMap[PlayerPOSX, PlayerPOSY - 1];
+                bool _iswalkable = NextTile.IsWalkable;
+                if (_iswalkable)
                 {
-                    GameMap[PlayerPOSX, PlayerPOSY - 1] = PlayerIcon;
-                    GameMap[PlayerPOSX, PlayerPOSY] = Floor;
+                    CurrentTile.Icon = Floor;
+                    NextTile.Icon = PlayerIcon;
                     PlayerPOSY--;
                     DisplayPlayerPosition();
                 }
             }
             if (_direction == "South")
             {
-                if (GameMap[PlayerPOSX, PlayerPOSY + 1] != Wall_X && GameMap[PlayerPOSX, PlayerPOSY + 1] != Wall_Y)
+                Tile CurrentTile = (Tile)GameMap[PlayerPOSX, PlayerPOSY];
+                Tile NextTile = (Tile)GameMap[PlayerPOSX, PlayerPOSY + 1];
+                bool _iswalkable = NextTile.IsWalkable;
+                if (_iswalkable)
                 {
-                    GameMap[PlayerPOSX, PlayerPOSY + 1] = PlayerIcon;
-                    GameMap[PlayerPOSX, PlayerPOSY] = Floor;
+                    CurrentTile.Icon = Floor;
+                    NextTile.Icon = PlayerIcon;
                     PlayerPOSY++;
                     DisplayPlayerPosition();
                 }
             }
             if (_direction == "West")
             {
-                if (GameMap[PlayerPOSX + 1, PlayerPOSY] != Wall_Y && GameMap[PlayerPOSX + 1, PlayerPOSY] != Wall_X)
+                Tile CurrentTile = (Tile)GameMap[PlayerPOSX, PlayerPOSY];
+                Tile NextTile = (Tile)GameMap[PlayerPOSX - 1, PlayerPOSY];
+                bool _iswalkable = NextTile.IsWalkable;
+                if (_iswalkable)
                 {
-                    GameMap[PlayerPOSX + 1, PlayerPOSY] = PlayerIcon;
-                    GameMap[PlayerPOSX, PlayerPOSY] = Floor;
-                    PlayerPOSX++;
+                    CurrentTile.Icon = Floor;
+                    NextTile.Icon = PlayerIcon;
+                    PlayerPOSX--;
                     DisplayPlayerPosition();
                 }
             }
             if (_direction == "East")
             {
-                if (GameMap[PlayerPOSX - 1, PlayerPOSY] != Wall_Y && GameMap[PlayerPOSX - 1, PlayerPOSY] != Wall_X)
+                Tile CurrentTile = (Tile)GameMap[PlayerPOSX, PlayerPOSY];
+                Tile NextTile = (Tile)GameMap[PlayerPOSX + 1, PlayerPOSY];
+                bool _iswalkable = NextTile.IsWalkable;
+                if (_iswalkable)
                 {
-                    GameMap[PlayerPOSX - 1, PlayerPOSY] = PlayerIcon;
-                    GameMap[PlayerPOSX, PlayerPOSY] = Floor;
-                    PlayerPOSX--;
+                    CurrentTile.Icon = Floor;
+                    NextTile.Icon = PlayerIcon;
+                    PlayerPOSX++;
                     DisplayPlayerPosition();
                 }
             }
             if (_direction == "NorthWest")
             {
-                if (GameMap[PlayerPOSX - 1, PlayerPOSY - 1] != Wall_Y && GameMap[PlayerPOSX - 1, PlayerPOSY - 1] != Wall_X)
+                Tile CurrentTile = (Tile)GameMap[PlayerPOSX, PlayerPOSY];
+                Tile NextTile = (Tile)GameMap[PlayerPOSX - 1, PlayerPOSY - 1];
+                bool _iswalkable = NextTile.IsWalkable;
+                if (_iswalkable)
                 {
-                    GameMap[PlayerPOSX - 1, PlayerPOSY - 1] = PlayerIcon;
-                    GameMap[PlayerPOSX, PlayerPOSY] = Floor;
+                    CurrentTile.Icon = Floor;
+                    NextTile.Icon = PlayerIcon;
                     PlayerPOSX--;
                     PlayerPOSY--;
                     DisplayPlayerPosition();
@@ -92,10 +122,13 @@ namespace DungeonMap
             }
             if (_direction == "NorthEast")
             {
-                if (GameMap[PlayerPOSX + 1, PlayerPOSY - 1] != Wall_Y && GameMap[PlayerPOSX + 1, PlayerPOSY - 1] != Wall_X)
+                Tile CurrentTile = (Tile)GameMap[PlayerPOSX, PlayerPOSY];
+                Tile NextTile = (Tile)GameMap[PlayerPOSX + 1, PlayerPOSY - 1];
+                bool _iswalkable = NextTile.IsWalkable;
+                if (_iswalkable)
                 {
-                    GameMap[PlayerPOSX + 1, PlayerPOSY - 1] = PlayerIcon;
-                    GameMap[PlayerPOSX, PlayerPOSY] = Floor;
+                    CurrentTile.Icon = Floor;
+                    NextTile.Icon = PlayerIcon;
                     PlayerPOSX++;
                     PlayerPOSY--;
                     DisplayPlayerPosition();
@@ -103,10 +136,13 @@ namespace DungeonMap
             }
             if (_direction == "SouthWest")
             {
-                if (GameMap[PlayerPOSX - 1, PlayerPOSY + 1] != Wall_Y && GameMap[PlayerPOSX - 1, PlayerPOSY + 1] != Wall_X)
+                Tile CurrentTile = (Tile)GameMap[PlayerPOSX, PlayerPOSY];
+                Tile NextTile = (Tile)GameMap[PlayerPOSX - 1, PlayerPOSY + 1];
+                bool _iswalkable = NextTile.IsWalkable;
+                if (_iswalkable)
                 {
-                    GameMap[PlayerPOSX - 1, PlayerPOSY + 1] = PlayerIcon;
-                    GameMap[PlayerPOSX, PlayerPOSY] = Floor;
+                    CurrentTile.Icon = Floor;
+                    NextTile.Icon = PlayerIcon;
                     PlayerPOSX--;
                     PlayerPOSY++;
                     DisplayPlayerPosition();
@@ -114,10 +150,13 @@ namespace DungeonMap
             }
             if (_direction == "SouthEast")
             {
-                if (GameMap[PlayerPOSX + 1, PlayerPOSY + 1] != Wall_Y && GameMap[PlayerPOSX + 1, PlayerPOSY + 1] != Wall_X)
+                Tile CurrentTile = (Tile)GameMap[PlayerPOSX, PlayerPOSY];
+                Tile NextTile = (Tile)GameMap[PlayerPOSX + 1, PlayerPOSY + 1];
+                bool _iswalkable = NextTile.IsWalkable;
+                if (_iswalkable)
                 {
-                    GameMap[PlayerPOSX + 1, PlayerPOSY + 1] = PlayerIcon;
-                    GameMap[PlayerPOSX, PlayerPOSY] = Floor;
+                    CurrentTile.Icon = Floor;
+                    NextTile.Icon = PlayerIcon;
                     PlayerPOSX++;
                     PlayerPOSY++;
                     DisplayPlayerPosition();
@@ -135,13 +174,16 @@ namespace DungeonMap
                 int _randX = random.Next(0, MapSizeX);
                 int _randY = random.Next(0, MapSizeY);
 
-                if (GameMap[_randX, _randY] == Floor && _placed == 0)
+                Tile CurrentTile = (Tile)GameMap[_randX, _randY];
+                bool _iswalkable = CurrentTile.IsWalkable;
+
+                if (_iswalkable && _placed == 0)
                 {
-                    GameMap[_randX, _randY] = PlayerIcon;
+                    CurrentTile.Icon = PlayerIcon;
+
                     PlayerPOSX = _randX;
                     PlayerPOSY = _randY;
                     _placed = 1;
-                    DisplayPlayerPosition();
                 }
             } while (_placed == 0);
         }
@@ -157,9 +199,12 @@ namespace DungeonMap
                 int _randX = random.Next(0, MapSizeX);
                 int _randY = random.Next(0, MapSizeY);
 
-                if (GameMap[_randX, _randY] == Floor && _placed == 0)
+                Tile CurrentTile = (Tile)GameMap[_randX, _randY];
+                bool _iswalkable = CurrentTile.IsWalkable;
+
+                if (_iswalkable && _placed == 0)
                 {
-                    GameMap[_randX, _randY] = "M";
+                    CurrentTile.Icon = "M";
                     _placed = 1;
                 }
             } while (_placed == 0);
@@ -187,25 +232,38 @@ namespace DungeonMap
             {
                 for (int x = 0; x <= RoomWidth; x++)
                 {
-                    if (y == 0 || y == RoomHeight)
+                    if (y == 0 || y == RoomHeight) // "═"
                     {
-                        //if (y == 0 && x == 0) // testing - to number each room
-                        //{
-                        //    GameMap[RoomPOSX + x, RoomPOSY + y] = RoomNumber.ToString();
-                        //}
-                        //else
-                        {
-                            GameMap[RoomPOSX + x, RoomPOSY + y] = Wall_X;
-                        }
+                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, Wall_X, false);
                     }
-                    else if (x == 0 || x == RoomWidth)
+                    else if (x == 0 || x == RoomWidth) // "║"
                     {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = Wall_Y;
+                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, Wall_Y, false);
                     }
-                    else
+                    else // "."
                     {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = Floor;
+                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, Floor, true);
                     }
+
+
+                    /*
+                    if (x == 0 && y == 0)
+                    {
+                        GameMap[RoomPOSX + x, RoomPOSY + y] = NWcorner;
+                    }
+                    if (y == 0 && x == RoomWidth)
+                    {
+                        GameMap[RoomPOSX + x, RoomPOSY + y] = NEcorner;
+                    }
+                    if (y == RoomHeight && x == RoomWidth)
+                    {
+                        GameMap[RoomPOSX + x, RoomPOSY + y] = SEcorner;
+                    }
+                    if (y == RoomHeight && x == 0)
+                    {
+                        GameMap[RoomPOSX + x, RoomPOSY + y] = SWcorner;
+                    }
+                    */
                 }
             }
 
@@ -213,50 +271,54 @@ namespace DungeonMap
         }
 
 
-        public void RoomCollision()
-        {
-            for (int x = 1; x <= MapSizeX - 2; x++)
-            {
-                for (int y = 1; y <= MapSizeY - 2; y++)
-                {
-                    if (GameMap[x + 1, y] == Floor && GameMap[x - 1, y] == Floor)
-                    {
-                        GameMap[x, y] = Floor;
-                    }
-                    if (GameMap[x, y + 1] == Floor && GameMap[x, y - 1] == Floor)
-                    {
-                        GameMap[x, y] = Floor;
-                    }
-                }
-            }
-        }
+        //public void RoomCollision()
+        //{
+        //    for (int x = 1; x <= MapSizeX - 2; x++)
+        //    {
+        //        for (int y = 1; y <= MapSizeY - 2; y++)
+        //        {
+        //            if (GameMap[x, y] == Wall_X && GameMap[x, y + 1] == Floor && GameMap[x, y - 1] == Floor)
+        //            {
+        //                GameMap[x, y] = Floor;
+        //            }
+        //            if (GameMap[x, y] == Wall_Y && GameMap[x + 1, y] == Floor && GameMap[x - 1, y] == Floor)
+        //            {
+        //                GameMap[x, y] = Floor;
+        //            }
+
+        //            //! need to add code for corners
+                    
+
+        //        }
+        //    }
+        //}
 
         // needs work, outer frame of map - out of range error
-        public void FixCorners()
-        {
-            for (int x = 1; x <= MapSizeX - 2; x++)
-            {
-                for (int y = 1; y <= MapSizeY - 2; y++)
-                {
-                    if (GameMap[x, y + 1] == Wall_Y && GameMap[x + 1, y] == Wall_X)
-                    {
-                        GameMap[x, y] = NEcorner;
-                    }
-                    if (GameMap[x - 1, y] == Wall_X && GameMap[x, y + 1] == Wall_Y)
-                    {
-                        GameMap[x, y] = NWcorner;
-                    }
-                    if (GameMap[x, y - 1] == Wall_Y && GameMap[x + 1, y] == Wall_X)
-                    {
-                        GameMap[x, y] = SEcorner;
-                    }
-                    if (GameMap[x, y - 1] == Wall_Y && GameMap[x - 1, y] == Wall_X)
-                    {
-                        GameMap[x, y] = SWcorner;
-                    }
-                }
-            }
-        }
+        //public void FixCorners()
+        //{
+        //    for (int x = 1; x <= MapSizeX - 2; x++)
+        //    {
+        //        for (int y = 1; y <= MapSizeY - 2; y++)
+        //        {
+        //            if (GameMap[x, y + 1] == Wall_Y && GameMap[x + 1, y] == Wall_X)
+        //            {
+        //                GameMap[x, y] = NEcorner;
+        //            }
+        //            if (GameMap[x - 1, y] == Wall_X && GameMap[x, y + 1] == Wall_Y)
+        //            {
+        //                GameMap[x, y] = NWcorner;
+        //            }
+        //            if (GameMap[x, y - 1] == Wall_Y && GameMap[x + 1, y] == Wall_X)
+        //            {
+        //                GameMap[x, y] = SEcorner;
+        //            }
+        //            if (GameMap[x, y - 1] == Wall_Y && GameMap[x - 1, y] == Wall_X)
+        //            {
+        //                GameMap[x, y] = SWcorner;
+        //            }
+        //        }
+        //    }
+        //}
 
         public void DisplayRoomInfo(int RoomWidth, int RoomHeight, int RoomPOSX, int RoomPOSY)
         {
