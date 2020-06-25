@@ -20,16 +20,13 @@ namespace DungeonMap
 
             map.FillMap();
 
-            map.CreateRoom();
-            map.CreateRoom();
-            map.CreateRoom();
-            map.CreateRoom();
-            map.CreateRoom();
-            map.CreateRoom();
-            map.CreateRoom();
-            map.CreateRoom();
-            map.CreateRoom();
-            map.CreateRoom();
+            int _roomCount = 0;
+            do
+            {
+                map.CreateRoom();
+                _roomCount++;
+            } while (_roomCount < 10); //make 10 rooms
+
 
             //map.RoomCollision();
             //map.FixCorners();

@@ -6,7 +6,7 @@ namespace DungeonMap
     {
         private readonly string Wall_X = "═";
         private readonly string Wall_Y = "║";
-        private readonly string Floor = ".";
+        private readonly string Floor = "·"; //ascii #183 middle dot
 
         public string NWcorner = "╔";
         public string NEcorner = "╗";
@@ -51,7 +51,7 @@ namespace DungeonMap
             }
         }
 
-        //todo maybe check if next tile is floor instead of checking if next tile is not a wall
+       
         public void MovePlayer(string _direction)
         {
             if (_direction == "North")
@@ -186,6 +186,8 @@ namespace DungeonMap
                     _placed = 1;
                 }
             } while (_placed == 0);
+
+            DisplayPlayerPosition();
         }
 
 
@@ -246,24 +248,24 @@ namespace DungeonMap
                     }
 
 
-                    /*
+                    
                     if (x == 0 && y == 0)
                     {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = NWcorner;
+                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, NWcorner, false);
                     }
                     if (y == 0 && x == RoomWidth)
                     {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = NEcorner;
+                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, NEcorner, false);
                     }
                     if (y == RoomHeight && x == RoomWidth)
                     {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = SEcorner;
+                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, SEcorner, false);
                     }
                     if (y == RoomHeight && x == 0)
                     {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = SWcorner;
+                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, SWcorner, false);
                     }
-                    */
+                    
                 }
             }
 
