@@ -24,6 +24,204 @@ namespace DungeonMap
 
         private int RoomNumber = 1;
 
+        public int NumberOfRooms = 0;
+
+        public void Create()
+        {
+            Random random = new Random();
+
+            //todo 3x3 room structure - may enlarge in the future
+
+            // row 1
+            int buildRoom = random.Next(1, 3);
+            if (buildRoom == 1)
+            {
+                int RoomHeight = random.Next(3, 9);
+                int RoomWidth = random.Next(3, 34);
+
+                int RoomPOSX = random.Next(0, 34 - 1 - RoomWidth);
+                int RoomPOSY = random.Next(0, 9 - 1 - RoomHeight);
+
+                DisplayRoomInfo(RoomWidth + 1, RoomHeight + 1, RoomPOSX, RoomPOSY);
+                CreateRoom(RoomHeight, RoomWidth, RoomPOSX, RoomPOSY);
+            }
+
+            buildRoom = random.Next(1, 3);
+            if (buildRoom == 1)
+            {
+                int RoomHeight = random.Next(3, 9);
+                int RoomWidth = random.Next(3, 34);
+
+                int RoomPOSX = random.Next(38, 72 - 1 - RoomWidth);
+                int RoomPOSY = random.Next(0, 9 - 1 - RoomHeight);
+
+                DisplayRoomInfo(RoomWidth + 1, RoomHeight + 1, RoomPOSX, RoomPOSY);
+                CreateRoom(RoomHeight, RoomWidth, RoomPOSX, RoomPOSY);
+            }
+
+            buildRoom = random.Next(1, 3);
+            if (buildRoom == 1)
+            {
+                int RoomHeight = random.Next(3, 9);
+                int RoomWidth = random.Next(3, 34);
+
+                int RoomPOSX = random.Next(76, 110 - 1 - RoomWidth);
+                int RoomPOSY = random.Next(0, 9 - 1 - RoomHeight);
+
+                DisplayRoomInfo(RoomWidth + 1, RoomHeight + 1, RoomPOSX, RoomPOSY);
+                CreateRoom(RoomHeight, RoomWidth, RoomPOSX, RoomPOSY);
+            }
+
+
+            // row 2
+            buildRoom = random.Next(1, 3);
+            if (buildRoom == 1)
+            {
+                int RoomHeight = random.Next(3, 9);
+                int RoomWidth = random.Next(3, 34);
+
+                int RoomPOSX = random.Next(0, 34 - 1 - RoomWidth);
+                int RoomPOSY = random.Next(13, 22 - 1 - RoomHeight);
+
+                DisplayRoomInfo(RoomWidth + 1, RoomHeight + 1, RoomPOSX, RoomPOSY);
+                CreateRoom(RoomHeight, RoomWidth, RoomPOSX, RoomPOSY);
+            }
+
+            buildRoom = random.Next(1, 3);
+            if (buildRoom == 1)
+            {
+                int RoomHeight = random.Next(3, 9);
+                int RoomWidth = random.Next(3, 34);
+
+                int RoomPOSX = random.Next(38, 72 - 1 - RoomWidth);
+                int RoomPOSY = random.Next(13, 22 - 1 - RoomHeight);
+
+                DisplayRoomInfo(RoomWidth + 1, RoomHeight + 1, RoomPOSX, RoomPOSY);
+                CreateRoom(RoomHeight, RoomWidth, RoomPOSX, RoomPOSY);
+            }
+
+            buildRoom = random.Next(1, 3);
+            if (buildRoom == 1)
+            {
+                int RoomHeight = random.Next(3, 9);
+                int RoomWidth = random.Next(3, 34);
+
+                int RoomPOSX = random.Next(76, 110 - 1 - RoomWidth);
+                int RoomPOSY = random.Next(13, 22 - 1 - RoomHeight);
+
+                DisplayRoomInfo(RoomWidth + 1, RoomHeight + 1, RoomPOSX, RoomPOSY);
+                CreateRoom(RoomHeight, RoomWidth, RoomPOSX, RoomPOSY);
+            }
+
+            // row 3
+            buildRoom = random.Next(1, 3);
+            if (buildRoom == 1)
+            {
+                int RoomHeight = random.Next(3, 9);
+                int RoomWidth = random.Next(3, 34);
+
+                int RoomPOSX = random.Next(0, 34 - 1 - RoomWidth);
+                int RoomPOSY = random.Next(26, 35 - 1 - RoomHeight);
+
+                DisplayRoomInfo(RoomWidth + 1, RoomHeight + 1, RoomPOSX, RoomPOSY);
+                CreateRoom(RoomHeight, RoomWidth, RoomPOSX, RoomPOSY);
+            }
+
+            buildRoom = random.Next(1, 3);
+            if (buildRoom == 1)
+            {
+                int RoomHeight = random.Next(3, 9);
+                int RoomWidth = random.Next(3, 34);
+
+                int RoomPOSX = random.Next(38, 72 - 1 - RoomWidth);
+                int RoomPOSY = random.Next(26, 35 - 1 - RoomHeight);
+
+                DisplayRoomInfo(RoomWidth + 1, RoomHeight + 1, RoomPOSX, RoomPOSY);
+                CreateRoom(RoomHeight, RoomWidth, RoomPOSX, RoomPOSY);
+            }
+
+            buildRoom = random.Next(1, 3);
+            if (buildRoom == 1)
+            {
+                int RoomHeight = random.Next(3, 9);
+                int RoomWidth = random.Next(3, 34);
+
+                int RoomPOSX = random.Next(76, 110 - 1 - RoomWidth);
+                int RoomPOSY = random.Next(26, 35 - 1 - RoomHeight);
+
+                DisplayRoomInfo(RoomWidth + 1, RoomHeight + 1, RoomPOSX, RoomPOSY);
+                CreateRoom(RoomHeight, RoomWidth, RoomPOSX, RoomPOSY);
+            }
+
+
+
+
+        }
+
+
+
+
+        public void CreateRoom(int RoomHeight, int RoomWidth, int RoomPOSX, int RoomPOSY)
+        {
+            //Random random = new Random();
+
+            //int RoomHeight = random.Next(3, 9);
+            //int RoomWidth = random.Next(3, 34);
+
+            //int RoomPOSX = random.Next(0, MapSizeX - 1 - RoomWidth);
+            //int RoomPOSY = random.Next(0, MapSizeY - 1 - RoomHeight);
+
+            //DisplayRoomInfo(RoomWidth + 1, RoomHeight + 1, RoomPOSX, RoomPOSY);
+
+            NumberOfRooms++;
+
+            for (int y = 0; y <= RoomHeight; y++)
+            {
+                for (int x = 0; x <= RoomWidth; x++)
+                {
+                    //apply walls
+                    if (y == 0 || y == RoomHeight) // "═"
+                    {
+                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, Wall_X, false);
+                    }
+                    else if (x == 0 || x == RoomWidth) // "║"
+                    {
+                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, Wall_Y, false);
+                    }
+                    //apply floors
+                    else // "."
+                    {
+                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, Floor, true);
+                    }
+
+                    // apply corner walls
+                    if (x == 0 && y == 0)
+                    {
+                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, NWcorner, false);
+                    }
+                    if (y == 0 && x == RoomWidth)
+                    {
+                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, NEcorner, false);
+                    }
+                    if (y == RoomHeight && x == RoomWidth)
+                    {
+                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, SEcorner, false);
+                    }
+                    if (y == RoomHeight && x == 0)
+                    {
+                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, SWcorner, false);
+                    }
+
+                }
+            }
+
+            RoomNumber++;
+        }
+
+
+
+
+
 
         public void FillMap()
         {
@@ -35,6 +233,7 @@ namespace DungeonMap
                 }
             }
         }
+
 
         public void Display()
         {
@@ -51,7 +250,63 @@ namespace DungeonMap
             }
         }
 
-       
+
+        public void PlacePlayer()
+        {
+            Random random = new Random();
+            int _placed = 0;
+
+            do
+            {
+                int _randX = random.Next(0, MapSizeX);
+                int _randY = random.Next(0, MapSizeY);
+
+                Tile CurrentTile = (Tile)GameMap[_randX, _randY];
+                bool _iswalkable = CurrentTile.IsWalkable;
+
+                if (_iswalkable && _placed == 0)
+                {
+                    CurrentTile.Icon = PlayerIcon;
+
+                    PlayerPOSX = _randX;
+                    PlayerPOSY = _randY;
+                    _placed = 1;
+                }
+            } while (_placed == 0);
+
+            DisplayPlayerPosition();
+        }
+
+
+        public void PlaceMonster()
+        {
+            Random random = new Random();
+            int _placed = 0;
+
+            do
+            {
+                int _randX = random.Next(0, MapSizeX);
+                int _randY = random.Next(0, MapSizeY);
+
+                Tile CurrentTile = (Tile)GameMap[_randX, _randY];
+                bool _iswalkable = CurrentTile.IsWalkable;
+
+                if (_iswalkable && _placed == 0)
+                {
+                    CurrentTile.Icon = "M";
+                    _placed = 1;
+                }
+            } while (_placed == 0);
+        }
+
+
+        public void DisplayPlayerPosition()
+        {
+            Console.SetCursorPosition(110, 0);
+            Console.WriteLine($"Player Position: x{PlayerPOSX}, y{PlayerPOSY}");
+        }
+
+
         public void MovePlayer(string _direction)
         {
             if (_direction == "North")
@@ -164,163 +419,6 @@ namespace DungeonMap
             }
         }
 
-        public void PlacePlayer()
-        {
-            Random random = new Random();
-            int _placed = 0;
-
-            do
-            {
-                int _randX = random.Next(0, MapSizeX);
-                int _randY = random.Next(0, MapSizeY);
-
-                Tile CurrentTile = (Tile)GameMap[_randX, _randY];
-                bool _iswalkable = CurrentTile.IsWalkable;
-
-                if (_iswalkable && _placed == 0)
-                {
-                    CurrentTile.Icon = PlayerIcon;
-
-                    PlayerPOSX = _randX;
-                    PlayerPOSY = _randY;
-                    _placed = 1;
-                }
-            } while (_placed == 0);
-
-            DisplayPlayerPosition();
-        }
-
-
-        public void PlaceMonster()
-        {
-            Random random = new Random();
-            int _placed = 0;
-
-            do
-            {
-                int _randX = random.Next(0, MapSizeX);
-                int _randY = random.Next(0, MapSizeY);
-
-                Tile CurrentTile = (Tile)GameMap[_randX, _randY];
-                bool _iswalkable = CurrentTile.IsWalkable;
-
-                if (_iswalkable && _placed == 0)
-                {
-                    CurrentTile.Icon = "M";
-                    _placed = 1;
-                }
-            } while (_placed == 0);
-        }
-
-        public void DisplayPlayerPosition()
-        {
-            Console.SetCursorPosition(110, 0);
-            Console.WriteLine($"Player Position: x{PlayerPOSX}, y{PlayerPOSY}");
-        }
-
-        public void CreateRoom()
-        {
-            Random random = new Random();
-
-            int RoomHeight = random.Next(3, 9);
-            int RoomWidth = random.Next(3, 34);
-
-            int RoomPOSX = random.Next(0, MapSizeX - 1 - RoomWidth);
-            int RoomPOSY = random.Next(0, MapSizeY - 1 - RoomHeight);
-
-            DisplayRoomInfo(RoomWidth + 1, RoomHeight + 1, RoomPOSX, RoomPOSY);
-
-            for (int y = 0; y <= RoomHeight; y++)
-            {
-                for (int x = 0; x <= RoomWidth; x++)
-                {
-                    if (y == 0 || y == RoomHeight) // "═"
-                    {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, Wall_X, false);
-                    }
-                    else if (x == 0 || x == RoomWidth) // "║"
-                    {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, Wall_Y, false);
-                    }
-                    else // "."
-                    {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, Floor, true);
-                    }
-
-
-                    
-                    if (x == 0 && y == 0)
-                    {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, NWcorner, false);
-                    }
-                    if (y == 0 && x == RoomWidth)
-                    {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, NEcorner, false);
-                    }
-                    if (y == RoomHeight && x == RoomWidth)
-                    {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, SEcorner, false);
-                    }
-                    if (y == RoomHeight && x == 0)
-                    {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, SWcorner, false);
-                    }
-                    
-                }
-            }
-
-            RoomNumber++;
-        }
-
-
-        //public void RoomCollision()
-        //{
-        //    for (int x = 1; x <= MapSizeX - 2; x++)
-        //    {
-        //        for (int y = 1; y <= MapSizeY - 2; y++)
-        //        {
-        //            if (GameMap[x, y] == Wall_X && GameMap[x, y + 1] == Floor && GameMap[x, y - 1] == Floor)
-        //            {
-        //                GameMap[x, y] = Floor;
-        //            }
-        //            if (GameMap[x, y] == Wall_Y && GameMap[x + 1, y] == Floor && GameMap[x - 1, y] == Floor)
-        //            {
-        //                GameMap[x, y] = Floor;
-        //            }
-
-        //            //! need to add code for corners
-                    
-
-        //        }
-        //    }
-        //}
-
-        // needs work, outer frame of map - out of range error
-        //public void FixCorners()
-        //{
-        //    for (int x = 1; x <= MapSizeX - 2; x++)
-        //    {
-        //        for (int y = 1; y <= MapSizeY - 2; y++)
-        //        {
-        //            if (GameMap[x, y + 1] == Wall_Y && GameMap[x + 1, y] == Wall_X)
-        //            {
-        //                GameMap[x, y] = NEcorner;
-        //            }
-        //            if (GameMap[x - 1, y] == Wall_X && GameMap[x, y + 1] == Wall_Y)
-        //            {
-        //                GameMap[x, y] = NWcorner;
-        //            }
-        //            if (GameMap[x, y - 1] == Wall_Y && GameMap[x + 1, y] == Wall_X)
-        //            {
-        //                GameMap[x, y] = SEcorner;
-        //            }
-        //            if (GameMap[x, y - 1] == Wall_Y && GameMap[x - 1, y] == Wall_X)
-        //            {
-        //                GameMap[x, y] = SWcorner;
-        //            }
-        //        }
-        //    }
-        //}
 
         public void DisplayRoomInfo(int RoomWidth, int RoomHeight, int RoomPOSX, int RoomPOSY)
         {
