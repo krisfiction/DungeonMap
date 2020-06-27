@@ -4,14 +4,15 @@ namespace DungeonMap
 {
     public class Map
     {
-        private readonly string Wall_X = "═";
-        private readonly string Wall_Y = "║";
-        private readonly string Floor = "·"; //ascii #183 middle dot
+        private readonly string WallxIcon = "═";
+        private readonly string WallyIcon = "║";
+        private readonly string FloorIcon = "·"; //ascii #183 middle dot
+        private readonly string DoorIcon = "+";
 
-        public string NWcorner = "╔";
-        public string NEcorner = "╗";
-        public string SWcorner = "╚";
-        public string SEcorner = "╝";
+        public string NWcornerIcon = "╔";
+        public string NEcornerIcon = "╗";
+        public string SWcornerIcon = "╚";
+        public string SEcornerIcon = "╝";
 
         private int PlayerPOSX { get; set; }
         private int PlayerPOSY { get; set; }
@@ -32,7 +33,7 @@ namespace DungeonMap
         {
             Random random = new Random();
 
-            //todo 3x3 room structure - may enlarge in the future
+            //! 3x3 room structure - may enlarge in the future
 
             // row 0
             int buildRoom = random.Next(1, 3);
@@ -48,7 +49,8 @@ namespace DungeonMap
                 CreateRoom(RoomPOSX, RoomPOSY, RoomHeight, RoomWidth);
             }
 
-            buildRoom = random.Next(1, 3);
+            //! auto build to test hallways
+            buildRoom = 1;// random.Next(1, 3);
             if (buildRoom == 1)
             {
                 int RoomHeight = random.Next(3, 9);
@@ -61,7 +63,8 @@ namespace DungeonMap
                 CreateRoom(RoomPOSX, RoomPOSY, RoomHeight, RoomWidth);
             }
 
-            buildRoom = random.Next(1, 3);
+            //! auto build to test hallways
+            buildRoom = 1;// random.Next(1, 3);
             if (buildRoom == 1)
             {
                 int RoomHeight = random.Next(3, 9);
@@ -157,6 +160,88 @@ namespace DungeonMap
         }
 
 
+        //! connecting room 2 [0, 1] to room 3 [0, 2]
+        public void CreateHallways()
+        {
+            Random random = new Random();
+            //! room 1
+            Room Room1 = (Room)rooms[0, 1];
+            int _number1 = Room1.Number;
+            int _posx1 = Room1.POSx;
+            int _posy1 = Room1.POSy;
+            int _height1 = Room1.Height;
+            int _width1 = Room1.Width;
+
+            //! room 2
+            Room Room2 = (Room)rooms[0, 2];
+            int _number2 = Room2.Number;
+            int _posx2 = Room2.POSx;
+            int _posy2 = Room2.POSy;
+            int _height2 = Room2.Height;
+            int _width2 = Room2.Width;
+
+            //! connect room 1 to room 2
+            int randompoint = random.Next(1, _height1);
+
+            int r1startx = _posx1 + _width1;
+            int y = _posy1 + randompoint;
+
+            int r2endx = _posx2;
+
+            for (int x = r1startx; x <= r2endx; x++)
+            {
+                Tile CurrentTile = (Tile)GameMap[x, y];
+                CurrentTile.Icon = FloorIcon;
+                CurrentTile.IsWalkable = true;
+
+                //Tile uTile = (Tile)GameMap[x, y - 1];
+                //uTile.Icon = WallxIcon;
+                //uTile.IsWalkable = false;
+
+                //Tile bTile = (Tile)GameMap[x, y + 1];
+                //bTile.Icon = WallxIcon;
+                //bTile.IsWalkable = false;
+
+                //todo check center tile and all 8 tiles around it to apply correct wall icon
+                if (x == _posx1 + _width1)
+                {
+                    Tile UcornerTile = (Tile)GameMap[x, y];
+                    UcornerTile.Icon = DoorIcon;
+                    UcornerTile.IsWalkable = true;
+
+                    //    Tile UcornerTile = (Tile)GameMap[x, y - 1];
+                    //    UcornerTile.Icon = SWcornerIcon;
+                    //    UcornerTile.IsWalkable = false;
+
+                    //    Tile BcornerTile = (Tile)GameMap[x, y + 1];
+                    //    BcornerTile.Icon = NWcornerIcon;
+                    //    BcornerTile.IsWalkable = false;
+                }
+
+                if (x == r2endx)
+                {
+                    Tile UcornerTile = (Tile)GameMap[x, y];
+                    UcornerTile.Icon = DoorIcon;
+                    UcornerTile.IsWalkable = true;
+
+                    //    Tile UcornerTile = (Tile)GameMap[x, y - 1];
+                    //    UcornerTile.Icon = SEcornerIcon;
+                    //    UcornerTile.IsWalkable = false;
+
+                    //    Tile BcornerTile = (Tile)GameMap[x, y + 1];
+                    //    BcornerTile.Icon = NEcornerIcon;
+                    //    BcornerTile.IsWalkable = false;
+                }
+
+
+
+            }
+        }
+
+
+
+
+
 
 
         public void CreateRoom(int RoomPOSX, int RoomPOSY, int RoomHeight, int RoomWidth)
@@ -170,34 +255,34 @@ namespace DungeonMap
                     //apply walls
                     if (y == 0 || y == RoomHeight) // "═"
                     {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, Wall_X, false);
+                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, WallxIcon, false);
                     }
                     else if (x == 0 || x == RoomWidth) // "║"
                     {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, Wall_Y, false);
+                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, WallyIcon, false);
                     }
                     //apply floors
                     else // "."
                     {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, Floor, true);
+                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, FloorIcon, true);
                     }
 
                     // apply corner walls
                     if (x == 0 && y == 0)
                     {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, NWcorner, false);
+                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, NWcornerIcon, false);
                     }
                     if (y == 0 && x == RoomWidth)
                     {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, NEcorner, false);
+                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, NEcornerIcon, false);
                     }
                     if (y == RoomHeight && x == RoomWidth)
                     {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, SEcorner, false);
+                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, SEcornerIcon, false);
                     }
                     if (y == RoomHeight && x == 0)
                     {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, SWcorner, false);
+                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, SWcornerIcon, false);
                     }
 
                 }
@@ -229,7 +314,7 @@ namespace DungeonMap
             {
                 for (int y = 0; y <= 2; y++)
                 {
-                    //fill array with blank rooms
+                    //! fill array with blank rooms
                     rooms[x, y] = new Room(0, 0, 0, 0, 0);
                 }
             }
@@ -323,7 +408,7 @@ namespace DungeonMap
                 bool _iswalkable = NextTile.IsWalkable;
                 if (_iswalkable)
                 {
-                    CurrentTile.Icon = Floor;
+                    CurrentTile.Icon = FloorIcon;
                     NextTile.Icon = PlayerIcon;
                     PlayerPOSY--;
                     DisplayPlayerPosition();
@@ -336,7 +421,7 @@ namespace DungeonMap
                 bool _iswalkable = NextTile.IsWalkable;
                 if (_iswalkable)
                 {
-                    CurrentTile.Icon = Floor;
+                    CurrentTile.Icon = FloorIcon;
                     NextTile.Icon = PlayerIcon;
                     PlayerPOSY++;
                     DisplayPlayerPosition();
@@ -349,7 +434,7 @@ namespace DungeonMap
                 bool _iswalkable = NextTile.IsWalkable;
                 if (_iswalkable)
                 {
-                    CurrentTile.Icon = Floor;
+                    CurrentTile.Icon = FloorIcon;
                     NextTile.Icon = PlayerIcon;
                     PlayerPOSX--;
                     DisplayPlayerPosition();
@@ -362,7 +447,7 @@ namespace DungeonMap
                 bool _iswalkable = NextTile.IsWalkable;
                 if (_iswalkable)
                 {
-                    CurrentTile.Icon = Floor;
+                    CurrentTile.Icon = FloorIcon;
                     NextTile.Icon = PlayerIcon;
                     PlayerPOSX++;
                     DisplayPlayerPosition();
@@ -375,7 +460,7 @@ namespace DungeonMap
                 bool _iswalkable = NextTile.IsWalkable;
                 if (_iswalkable)
                 {
-                    CurrentTile.Icon = Floor;
+                    CurrentTile.Icon = FloorIcon;
                     NextTile.Icon = PlayerIcon;
                     PlayerPOSX--;
                     PlayerPOSY--;
@@ -389,7 +474,7 @@ namespace DungeonMap
                 bool _iswalkable = NextTile.IsWalkable;
                 if (_iswalkable)
                 {
-                    CurrentTile.Icon = Floor;
+                    CurrentTile.Icon = FloorIcon;
                     NextTile.Icon = PlayerIcon;
                     PlayerPOSX++;
                     PlayerPOSY--;
@@ -403,7 +488,7 @@ namespace DungeonMap
                 bool _iswalkable = NextTile.IsWalkable;
                 if (_iswalkable)
                 {
-                    CurrentTile.Icon = Floor;
+                    CurrentTile.Icon = FloorIcon;
                     NextTile.Icon = PlayerIcon;
                     PlayerPOSX--;
                     PlayerPOSY++;
@@ -417,7 +502,7 @@ namespace DungeonMap
                 bool _iswalkable = NextTile.IsWalkable;
                 if (_iswalkable)
                 {
-                    CurrentTile.Icon = Floor;
+                    CurrentTile.Icon = FloorIcon;
                     NextTile.Icon = PlayerIcon;
                     PlayerPOSX++;
                     PlayerPOSY++;
@@ -454,5 +539,7 @@ namespace DungeonMap
                 }
             }
         }
+
+
     }
 }

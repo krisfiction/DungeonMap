@@ -25,7 +25,7 @@ namespace DungeonMap
                 Main();
             }
 
-
+            map.CreateHallways();
             
             map.PlacePlayer();
             map.PlaceMonster();
