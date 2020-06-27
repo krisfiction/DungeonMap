@@ -22,6 +22,8 @@ namespace DungeonMap
 
         private readonly Tile[,] GameMap = new Tile[MapSizeX, MapSizeY];
 
+        private readonly Room[,] rooms = new Room[3,3];
+
         private int RoomNumber = 1;
 
         public int NumberOfRooms = 0;
@@ -32,7 +34,7 @@ namespace DungeonMap
 
             //todo 3x3 room structure - may enlarge in the future
 
-            // row 1
+            // row 0
             int buildRoom = random.Next(1, 3);
             if (buildRoom == 1)
             {
@@ -42,8 +44,8 @@ namespace DungeonMap
                 int RoomPOSX = random.Next(0, 34 - 1 - RoomWidth);
                 int RoomPOSY = random.Next(0, 9 - 1 - RoomHeight);
 
-                DisplayRoomInfo(RoomWidth + 1, RoomHeight + 1, RoomPOSX, RoomPOSY);
-                CreateRoom(RoomHeight, RoomWidth, RoomPOSX, RoomPOSY);
+                rooms[0, 0] = new Room(1, RoomPOSX, RoomPOSY, RoomHeight, RoomWidth);
+                CreateRoom(RoomPOSX, RoomPOSY, RoomHeight, RoomWidth);
             }
 
             buildRoom = random.Next(1, 3);
@@ -55,8 +57,8 @@ namespace DungeonMap
                 int RoomPOSX = random.Next(38, 72 - 1 - RoomWidth);
                 int RoomPOSY = random.Next(0, 9 - 1 - RoomHeight);
 
-                DisplayRoomInfo(RoomWidth + 1, RoomHeight + 1, RoomPOSX, RoomPOSY);
-                CreateRoom(RoomHeight, RoomWidth, RoomPOSX, RoomPOSY);
+                rooms[0, 1] = new Room(2, RoomPOSX, RoomPOSY, RoomHeight, RoomWidth);
+                CreateRoom(RoomPOSX, RoomPOSY, RoomHeight, RoomWidth);
             }
 
             buildRoom = random.Next(1, 3);
@@ -68,10 +70,50 @@ namespace DungeonMap
                 int RoomPOSX = random.Next(76, 110 - 1 - RoomWidth);
                 int RoomPOSY = random.Next(0, 9 - 1 - RoomHeight);
 
-                DisplayRoomInfo(RoomWidth + 1, RoomHeight + 1, RoomPOSX, RoomPOSY);
-                CreateRoom(RoomHeight, RoomWidth, RoomPOSX, RoomPOSY);
+                rooms[0, 2] = new Room(3, RoomPOSX, RoomPOSY, RoomHeight, RoomWidth);
+                CreateRoom(RoomPOSX, RoomPOSY, RoomHeight, RoomWidth);
             }
 
+
+            // row 1
+            buildRoom = random.Next(1, 3);
+            if (buildRoom == 1)
+            {
+                int RoomHeight = random.Next(3, 9);
+                int RoomWidth = random.Next(3, 34);
+
+                int RoomPOSX = random.Next(0, 34 - 1 - RoomWidth);
+                int RoomPOSY = random.Next(13, 22 - 1 - RoomHeight);
+
+                rooms[1, 0] = new Room(4, RoomPOSX, RoomPOSY, RoomHeight, RoomWidth);
+                CreateRoom(RoomPOSX, RoomPOSY, RoomHeight, RoomWidth);
+            }
+
+            buildRoom = random.Next(1, 3);
+            if (buildRoom == 1)
+            {
+                int RoomHeight = random.Next(3, 9);
+                int RoomWidth = random.Next(3, 34);
+
+                int RoomPOSX = random.Next(38, 72 - 1 - RoomWidth);
+                int RoomPOSY = random.Next(13, 22 - 1 - RoomHeight);
+
+                rooms[1, 1] = new Room(5, RoomPOSX, RoomPOSY, RoomHeight, RoomWidth);
+                CreateRoom(RoomPOSX, RoomPOSY, RoomHeight, RoomWidth);
+            }
+
+            buildRoom = random.Next(1, 3);
+            if (buildRoom == 1)
+            {
+                int RoomHeight = random.Next(3, 9);
+                int RoomWidth = random.Next(3, 34);
+
+                int RoomPOSX = random.Next(76, 110 - 1 - RoomWidth);
+                int RoomPOSY = random.Next(13, 22 - 1 - RoomHeight);
+
+                rooms[1, 2] = new Room(6, RoomPOSX, RoomPOSY, RoomHeight, RoomWidth);
+                CreateRoom(RoomPOSX, RoomPOSY, RoomHeight, RoomWidth);
+            }
 
             // row 2
             buildRoom = random.Next(1, 3);
@@ -81,50 +123,10 @@ namespace DungeonMap
                 int RoomWidth = random.Next(3, 34);
 
                 int RoomPOSX = random.Next(0, 34 - 1 - RoomWidth);
-                int RoomPOSY = random.Next(13, 22 - 1 - RoomHeight);
-
-                DisplayRoomInfo(RoomWidth + 1, RoomHeight + 1, RoomPOSX, RoomPOSY);
-                CreateRoom(RoomHeight, RoomWidth, RoomPOSX, RoomPOSY);
-            }
-
-            buildRoom = random.Next(1, 3);
-            if (buildRoom == 1)
-            {
-                int RoomHeight = random.Next(3, 9);
-                int RoomWidth = random.Next(3, 34);
-
-                int RoomPOSX = random.Next(38, 72 - 1 - RoomWidth);
-                int RoomPOSY = random.Next(13, 22 - 1 - RoomHeight);
-
-                DisplayRoomInfo(RoomWidth + 1, RoomHeight + 1, RoomPOSX, RoomPOSY);
-                CreateRoom(RoomHeight, RoomWidth, RoomPOSX, RoomPOSY);
-            }
-
-            buildRoom = random.Next(1, 3);
-            if (buildRoom == 1)
-            {
-                int RoomHeight = random.Next(3, 9);
-                int RoomWidth = random.Next(3, 34);
-
-                int RoomPOSX = random.Next(76, 110 - 1 - RoomWidth);
-                int RoomPOSY = random.Next(13, 22 - 1 - RoomHeight);
-
-                DisplayRoomInfo(RoomWidth + 1, RoomHeight + 1, RoomPOSX, RoomPOSY);
-                CreateRoom(RoomHeight, RoomWidth, RoomPOSX, RoomPOSY);
-            }
-
-            // row 3
-            buildRoom = random.Next(1, 3);
-            if (buildRoom == 1)
-            {
-                int RoomHeight = random.Next(3, 9);
-                int RoomWidth = random.Next(3, 34);
-
-                int RoomPOSX = random.Next(0, 34 - 1 - RoomWidth);
                 int RoomPOSY = random.Next(26, 35 - 1 - RoomHeight);
 
-                DisplayRoomInfo(RoomWidth + 1, RoomHeight + 1, RoomPOSX, RoomPOSY);
-                CreateRoom(RoomHeight, RoomWidth, RoomPOSX, RoomPOSY);
+                rooms[2, 0] = new Room(7, RoomPOSX, RoomPOSY, RoomHeight, RoomWidth);
+                CreateRoom(RoomPOSX, RoomPOSY, RoomHeight, RoomWidth);
             }
 
             buildRoom = random.Next(1, 3);
@@ -136,8 +138,8 @@ namespace DungeonMap
                 int RoomPOSX = random.Next(38, 72 - 1 - RoomWidth);
                 int RoomPOSY = random.Next(26, 35 - 1 - RoomHeight);
 
-                DisplayRoomInfo(RoomWidth + 1, RoomHeight + 1, RoomPOSX, RoomPOSY);
-                CreateRoom(RoomHeight, RoomWidth, RoomPOSX, RoomPOSY);
+                rooms[2, 1] = new Room(8, RoomPOSX, RoomPOSY, RoomHeight, RoomWidth);
+                CreateRoom(RoomPOSX, RoomPOSY, RoomHeight, RoomWidth);
             }
 
             buildRoom = random.Next(1, 3);
@@ -149,30 +151,16 @@ namespace DungeonMap
                 int RoomPOSX = random.Next(76, 110 - 1 - RoomWidth);
                 int RoomPOSY = random.Next(26, 35 - 1 - RoomHeight);
 
-                DisplayRoomInfo(RoomWidth + 1, RoomHeight + 1, RoomPOSX, RoomPOSY);
-                CreateRoom(RoomHeight, RoomWidth, RoomPOSX, RoomPOSY);
+                rooms[2, 2] = new Room(9, RoomPOSX, RoomPOSY, RoomHeight, RoomWidth);
+                CreateRoom(RoomPOSX, RoomPOSY, RoomHeight, RoomWidth);
             }
-
-
-
-
         }
 
 
 
 
-        public void CreateRoom(int RoomHeight, int RoomWidth, int RoomPOSX, int RoomPOSY)
+        public void CreateRoom(int RoomPOSX, int RoomPOSY, int RoomHeight, int RoomWidth)
         {
-            //Random random = new Random();
-
-            //int RoomHeight = random.Next(3, 9);
-            //int RoomWidth = random.Next(3, 34);
-
-            //int RoomPOSX = random.Next(0, MapSizeX - 1 - RoomWidth);
-            //int RoomPOSY = random.Next(0, MapSizeY - 1 - RoomHeight);
-
-            //DisplayRoomInfo(RoomWidth + 1, RoomHeight + 1, RoomPOSX, RoomPOSY);
-
             NumberOfRooms++;
 
             for (int y = 0; y <= RoomHeight; y++)
@@ -233,6 +221,25 @@ namespace DungeonMap
                 }
             }
         }
+
+
+        public void FillRooms()
+        {
+            for (int x = 0; x <= 2; x++)
+            {
+                for (int y = 0; y <= 2; y++)
+                {
+                    //fill array with blank rooms
+                    rooms[x, y] = new Room(0, 0, 0, 0, 0);
+                }
+            }
+        }
+
+
+
+        
+
+
 
 
         public void Display()
@@ -420,87 +427,31 @@ namespace DungeonMap
         }
 
 
-        public void DisplayRoomInfo(int RoomWidth, int RoomHeight, int RoomPOSX, int RoomPOSY)
+        public void DisplayRoomInfo()
         {
-            if (RoomNumber == 1)
-            {
-                Console.SetCursorPosition(110, 2);
-                Console.WriteLine($"Room {RoomNumber} Location: x{RoomPOSX}, y{RoomPOSY}");
+            int _printLocationAt = 0;
+            int _printDimensionsAt = 1;
 
-                Console.SetCursorPosition(110, 3);
-                Console.WriteLine($"Room {RoomNumber} Width: x{RoomWidth}, Hight: y{RoomHeight}");
-            }
-            if (RoomNumber == 2)
+            for (int x = 0; x <= 2; x++)
             {
-                Console.SetCursorPosition(110, 5);
-                Console.WriteLine($"Room {RoomNumber} Location: x{RoomPOSX}, y{RoomPOSY}");
+                for (int y = 0; y <= 2; y++)
+                {
+                    Room CurrentRoom = (Room)rooms[x, y];
+                    int _number = CurrentRoom.Number;
+                    int _posx = CurrentRoom.POSx;
+                    int _posy = CurrentRoom.POSy;
+                    int _height = CurrentRoom.Height;
+                    int _width = CurrentRoom.Width;
 
-                Console.SetCursorPosition(110, 6);
-                Console.WriteLine($"Room {RoomNumber} Width: x{RoomWidth}, Hight: y{RoomHeight}");
-            }
-            if (RoomNumber == 3)
-            {
-                Console.SetCursorPosition(110, 8);
-                Console.WriteLine($"Room {RoomNumber} Location: x{RoomPOSX}, y{RoomPOSY}");
+                    _printDimensionsAt += 3;
+                    _printLocationAt += 3;
 
-                Console.SetCursorPosition(110, 9);
-                Console.WriteLine($"Room {RoomNumber} Width: x{RoomWidth}, Hight: y{RoomHeight}");
-            }
-            if (RoomNumber == 4)
-            {
-                Console.SetCursorPosition(110, 11);
-                Console.WriteLine($"Room {RoomNumber} Location: x{RoomPOSX}, y{RoomPOSY}");
 
-                Console.SetCursorPosition(110, 12);
-                Console.WriteLine($"Room {RoomNumber} Width: x{RoomWidth}, Hight: y{RoomHeight}");
-            }
-            if (RoomNumber == 5)
-            {
-                Console.SetCursorPosition(110, 14);
-                Console.WriteLine($"Room {RoomNumber} Location: x{RoomPOSX}, y{RoomPOSY}");
-
-                Console.SetCursorPosition(110, 15);
-                Console.WriteLine($"Room {RoomNumber} Width: x{RoomWidth}, Hight: y{RoomHeight}");
-            }
-            if (RoomNumber == 6)
-            {
-                Console.SetCursorPosition(110, 17);
-                Console.WriteLine($"Room {RoomNumber} Location: x{RoomPOSX}, y{RoomPOSY}");
-
-                Console.SetCursorPosition(110, 18);
-                Console.WriteLine($"Room {RoomNumber} Width: x{RoomWidth}, Hight: y{RoomHeight}");
-            }
-            if (RoomNumber == 7)
-            {
-                Console.SetCursorPosition(110, 20);
-                Console.WriteLine($"Room {RoomNumber} Location: x{RoomPOSX}, y{RoomPOSY}");
-
-                Console.SetCursorPosition(110, 21);
-                Console.WriteLine($"Room {RoomNumber} Width: x{RoomWidth}, Hight: y{RoomHeight}");
-            }
-            if (RoomNumber == 8)
-            {
-                Console.SetCursorPosition(110, 23);
-                Console.WriteLine($"Room {RoomNumber} Location: x{RoomPOSX}, y{RoomPOSY}");
-
-                Console.SetCursorPosition(110, 24);
-                Console.WriteLine($"Room {RoomNumber} Width: x{RoomWidth}, Hight: y{RoomHeight}");
-            }
-            if (RoomNumber == 9)
-            {
-                Console.SetCursorPosition(110, 26);
-                Console.WriteLine($"Room {RoomNumber} Location: x{RoomPOSX}, y{RoomPOSY}");
-
-                Console.SetCursorPosition(110, 27);
-                Console.WriteLine($"Room {RoomNumber} Width: x{RoomWidth}, Hight: y{RoomHeight}");
-            }
-            if (RoomNumber == 10)
-            {
-                Console.SetCursorPosition(110, 29);
-                Console.WriteLine($"Room {RoomNumber} Location: x{RoomPOSX}, y{RoomPOSY}");
-
-                Console.SetCursorPosition(110, 30);
-                Console.WriteLine($"Room {RoomNumber} Width: x{RoomWidth}, Hight: y{RoomHeight}");
+                    Console.SetCursorPosition(110, _printLocationAt);
+                    Console.WriteLine($"Room {_number} Location: x{_posx}, y{_posy}");
+                    Console.SetCursorPosition(110, _printDimensionsAt);
+                    Console.WriteLine($"Room {_number} Width: x{_width}, Hight: y{_height}");
+                }
             }
         }
     }

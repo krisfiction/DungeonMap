@@ -15,6 +15,7 @@ namespace DungeonMap
 
             Map map = new Map();
             map.FillMap();
+            map.FillRooms();
            
             map.Create();
 
@@ -29,6 +30,7 @@ namespace DungeonMap
             map.PlacePlayer();
             map.PlaceMonster();
 
+            map.DisplayRoomInfo();
 
             map.Display();
 
