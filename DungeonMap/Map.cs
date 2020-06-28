@@ -181,61 +181,133 @@ namespace DungeonMap
             int _width2 = Room2.Width;
 
             //! connect room 1 to room 2
-            int randompoint = random.Next(1, _height1);
 
-            int r1startx = _posx1 + _width1;
-            int y = _posy1 + randompoint;
+            //! door 1 x, y
+            int RandomDoor1 = random.Next(1, _height1);
+            int Door1x = _posx1 + _width1;
+            int Door1y = _posy1 + RandomDoor1;
 
-            int r2endx = _posx2;
+            //! door 2 x, y
+            int RandomDoor2 = random.Next(1, _height2);
+            int Door2x = _posx2;
+            int Door2y = _posy2 + RandomDoor2;
 
-            for (int x = r1startx; x <= r2endx; x++)
+            //! hallway
+            int HallLength = Door2x - _posx1 - _width1;
+            int HallRandom = random.Next(1, HallLength);
+            int HallpartA = HallLength - HallRandom;
+            int HallpartB = Door1x + HallLength - HallpartA;
+
+
+            //todo check if door1 and door2 are on same y path
+            if (Door1y == Door2y)
             {
-                Tile CurrentTile = (Tile)GameMap[x, y];
-                CurrentTile.Icon = FloorIcon;
-                CurrentTile.IsWalkable = true;
-
-                //Tile uTile = (Tile)GameMap[x, y - 1];
-                //uTile.Icon = WallxIcon;
-                //uTile.IsWalkable = false;
-
-                //Tile bTile = (Tile)GameMap[x, y + 1];
-                //bTile.Icon = WallxIcon;
-                //bTile.IsWalkable = false;
-
-                //todo check center tile and all 8 tiles around it to apply correct wall icon
-                if (x == _posx1 + _width1)
+                int y = Door1y;
+                for (int x = Door1x; x <= Door2x; x++)
                 {
-                    Tile UcornerTile = (Tile)GameMap[x, y];
-                    UcornerTile.Icon = DoorIcon;
-                    UcornerTile.IsWalkable = true;
+                    Tile CurrentTile = (Tile)GameMap[x, y];
+                    CurrentTile.Icon = FloorIcon;
+                    CurrentTile.IsWalkable = true;
 
-                    //    Tile UcornerTile = (Tile)GameMap[x, y - 1];
-                    //    UcornerTile.Icon = SWcornerIcon;
-                    //    UcornerTile.IsWalkable = false;
+                    //! walls and corner walls around the hallway
+                    //! needs tweaked but mostly works however it is disabled untill i get hallways working correctly
+                    //Tile uTile = (Tile)GameMap[x, y - 1];
+                    //uTile.Icon = WallxIcon;
+                    //uTile.IsWalkable = false;
 
-                    //    Tile BcornerTile = (Tile)GameMap[x, y + 1];
-                    //    BcornerTile.Icon = NWcornerIcon;
-                    //    BcornerTile.IsWalkable = false;
+                    //Tile bTile = (Tile)GameMap[x, y + 1];
+                    //bTile.Icon = WallxIcon;
+                    //bTile.IsWalkable = false;
+
+                    //? check center tile and all 8 tiles around it to apply correct wall icon
+                    if (x == _posx1 + _width1)
+                    {
+                        Tile UcornerTile = (Tile)GameMap[x, y];
+                        UcornerTile.Icon = DoorIcon;
+                        UcornerTile.IsWalkable = true;
+
+                        //    Tile UcornerTile = (Tile)GameMap[x, y - 1];
+                        //    UcornerTile.Icon = SWcornerIcon;
+                        //    UcornerTile.IsWalkable = false;
+
+                        //    Tile BcornerTile = (Tile)GameMap[x, y + 1];
+                        //    BcornerTile.Icon = NWcornerIcon;
+                        //    BcornerTile.IsWalkable = false;
+                    }
+
+                    if (x == Door2x)
+                    {
+                        Tile UcornerTile = (Tile)GameMap[x, y];
+                        UcornerTile.Icon = DoorIcon;
+                        UcornerTile.IsWalkable = true;
+
+                        //    Tile UcornerTile = (Tile)GameMap[x, y - 1];
+                        //    UcornerTile.Icon = SEcornerIcon;
+                        //    UcornerTile.IsWalkable = false;
+
+                        //    Tile BcornerTile = (Tile)GameMap[x, y + 1];
+                        //    BcornerTile.Icon = NEcornerIcon;
+                        //    BcornerTile.IsWalkable = false;
+                    }
+                }
+            }
+            else
+            {
+                //todo build z hallway
+
+                //Console.SetCursorPosition(110, 1);
+                //Console.WriteLine("hallrandom: " + HallRandom + " HallLength: " + HallLength);
+
+                //Console.SetCursorPosition(110, 2);
+                //Console.WriteLine("door1x: " + Door1x + " Door1y: " + Door1y);
+                //Console.SetCursorPosition(110, 3);
+                //Console.WriteLine("door2x: " + Door2x + " Door2y: " + Door2y);
+                //Console.SetCursorPosition(110, 4);
+                //Console.WriteLine("hallA: " + HallpartA + " HallB: " + HallpartB);
+
+                int y = Door1y;
+                for (int x = Door1x; x <= HallpartB; x++)
+                {
+                    Tile CurrentTile = (Tile)GameMap[x, y];
+                    CurrentTile.Icon = FloorIcon;
+                    CurrentTile.IsWalkable = true;
+                }
+                y = Door2y;
+                for (int x = HallpartB; x <= Door2x; x++)
+                {
+                    Tile CurrentTile = (Tile)GameMap[x, y];
+                    CurrentTile.Icon = FloorIcon;
+                    CurrentTile.IsWalkable = true;
                 }
 
-                if (x == r2endx)
+                if (Door1y < Door2y)
                 {
-                    Tile UcornerTile = (Tile)GameMap[x, y];
-                    UcornerTile.Icon = DoorIcon;
-                    UcornerTile.IsWalkable = true;
+                    int x1 = HallpartB;
+                    for (int y1 = Door1y; y1 <= Door2y; y1++)
+                    {
+                        Tile CurrentTile = (Tile)GameMap[x1, y1];
+                        CurrentTile.Icon = FloorIcon;
+                        CurrentTile.IsWalkable = true;
+                    }
+                }
+                else
+                {
+                    int x1 = HallpartB;
+                    for (int y1 = Door2y; y1 <= Door1y; y1++)
+                    {
+                        Tile CurrentTile = (Tile)GameMap[x1, y1];
+                        CurrentTile.Icon = FloorIcon;
+                        CurrentTile.IsWalkable = true;
+                    }
 
-                    //    Tile UcornerTile = (Tile)GameMap[x, y - 1];
-                    //    UcornerTile.Icon = SEcornerIcon;
-                    //    UcornerTile.IsWalkable = false;
-
-                    //    Tile BcornerTile = (Tile)GameMap[x, y + 1];
-                    //    BcornerTile.Icon = NEcornerIcon;
-                    //    BcornerTile.IsWalkable = false;
                 }
 
 
 
             }
+
+
+
         }
 
 
