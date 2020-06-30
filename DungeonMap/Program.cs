@@ -14,13 +14,14 @@ namespace DungeonMap
             //Console.WriteLine(("").PadLeft(30, '#'));
 
             Map map = new Map();
+
             map.FillMap();
             map.FillRooms();
 
             map.Create();
 
-            // make at least 3 rooms
-            if (map.NumberOfRooms < 3)
+            // make at least 4 rooms
+            if (map.NumberOfRooms < 4)
             {
                 Main();
             }
@@ -30,7 +31,7 @@ namespace DungeonMap
             map.PlacePlayer();
             map.PlaceMonster();
 
-            map.DisplayRoomInfo();
+           // map.DisplayRoomInfo();
 
             map.Display();
 
