@@ -16,7 +16,7 @@ namespace DungeonMap
             Map map = new Map();
             map.FillMap();
             map.FillRooms();
-           
+
             map.Create();
 
             // make at least 3 rooms
@@ -26,7 +26,7 @@ namespace DungeonMap
             }
 
             map.CreateHallways();
-            
+
             map.PlacePlayer();
             map.PlaceMonster();
 

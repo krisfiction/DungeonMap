@@ -4,14 +4,15 @@ namespace DungeonMap
 {
     public class Map
     {
-        private readonly string Wall_X = "═";
-        private readonly string Wall_Y = "║";
-        private readonly string Floor = "·"; //ascii #183 middle dot
+        private readonly string WallxIcon = "═";
+        private readonly string WallyIcon = "║";
+        private readonly string FloorIcon = "·"; //ascii #183 middle dot
+        private readonly string DoorIcon = "+";
 
-        public string NWcorner = "╔";
-        public string NEcorner = "╗";
-        public string SWcorner = "╚";
-        public string SEcorner = "╝";
+        public string NWcornerIcon = "╔";
+        public string NEcornerIcon = "╗";
+        public string SWcornerIcon = "╚";
+        public string SEcornerIcon = "╝";
 
         private int PlayerPOSX { get; set; }
         private int PlayerPOSY { get; set; }
@@ -22,7 +23,7 @@ namespace DungeonMap
 
         private readonly Tile[,] GameMap = new Tile[MapSizeX, MapSizeY];
 
-        private readonly Room[,] rooms = new Room[3,3];
+        private readonly Room[,] rooms = new Room[3, 3];
 
         private int RoomNumber = 1;
 
@@ -359,6 +360,14 @@ namespace DungeonMap
                 }
             }
 
+            RoomNumber++;
+        }
+
+
+
+
+
+
         public void FillMap()
         {
             for (int x = 0; x <= MapSizeX - 1; x++)
@@ -385,7 +394,7 @@ namespace DungeonMap
 
 
 
-        
+
 
 
 
@@ -405,118 +414,6 @@ namespace DungeonMap
             }
         }
 
-       
-        public void MovePlayer(string _direction)
-        {
-            if (_direction == "North")
-            {
-                Tile CurrentTile = (Tile)GameMap[PlayerPOSX, PlayerPOSY];
-                Tile NextTile = (Tile)GameMap[PlayerPOSX, PlayerPOSY - 1];
-                bool _iswalkable = NextTile.IsWalkable;
-                if (_iswalkable)
-                {
-                    CurrentTile.Icon = Floor;
-                    NextTile.Icon = PlayerIcon;
-                    PlayerPOSY--;
-                    DisplayPlayerPosition();
-                }
-            }
-            if (_direction == "South")
-            {
-                Tile CurrentTile = (Tile)GameMap[PlayerPOSX, PlayerPOSY];
-                Tile NextTile = (Tile)GameMap[PlayerPOSX, PlayerPOSY + 1];
-                bool _iswalkable = NextTile.IsWalkable;
-                if (_iswalkable)
-                {
-                    CurrentTile.Icon = Floor;
-                    NextTile.Icon = PlayerIcon;
-                    PlayerPOSY++;
-                    DisplayPlayerPosition();
-                }
-            }
-            if (_direction == "West")
-            {
-                Tile CurrentTile = (Tile)GameMap[PlayerPOSX, PlayerPOSY];
-                Tile NextTile = (Tile)GameMap[PlayerPOSX - 1, PlayerPOSY];
-                bool _iswalkable = NextTile.IsWalkable;
-                if (_iswalkable)
-                {
-                    CurrentTile.Icon = Floor;
-                    NextTile.Icon = PlayerIcon;
-                    PlayerPOSX--;
-                    DisplayPlayerPosition();
-                }
-            }
-            if (_direction == "East")
-            {
-                Tile CurrentTile = (Tile)GameMap[PlayerPOSX, PlayerPOSY];
-                Tile NextTile = (Tile)GameMap[PlayerPOSX + 1, PlayerPOSY];
-                bool _iswalkable = NextTile.IsWalkable;
-                if (_iswalkable)
-                {
-                    CurrentTile.Icon = Floor;
-                    NextTile.Icon = PlayerIcon;
-                    PlayerPOSX++;
-                    DisplayPlayerPosition();
-                }
-            }
-            if (_direction == "NorthWest")
-            {
-                Tile CurrentTile = (Tile)GameMap[PlayerPOSX, PlayerPOSY];
-                Tile NextTile = (Tile)GameMap[PlayerPOSX - 1, PlayerPOSY - 1];
-                bool _iswalkable = NextTile.IsWalkable;
-                if (_iswalkable)
-                {
-                    CurrentTile.Icon = Floor;
-                    NextTile.Icon = PlayerIcon;
-                    PlayerPOSX--;
-                    PlayerPOSY--;
-                    DisplayPlayerPosition();
-                }
-            }
-            if (_direction == "NorthEast")
-            {
-                Tile CurrentTile = (Tile)GameMap[PlayerPOSX, PlayerPOSY];
-                Tile NextTile = (Tile)GameMap[PlayerPOSX + 1, PlayerPOSY - 1];
-                bool _iswalkable = NextTile.IsWalkable;
-                if (_iswalkable)
-                {
-                    CurrentTile.Icon = Floor;
-                    NextTile.Icon = PlayerIcon;
-                    PlayerPOSX++;
-                    PlayerPOSY--;
-                    DisplayPlayerPosition();
-                }
-            }
-            if (_direction == "SouthWest")
-            {
-                Tile CurrentTile = (Tile)GameMap[PlayerPOSX, PlayerPOSY];
-                Tile NextTile = (Tile)GameMap[PlayerPOSX - 1, PlayerPOSY + 1];
-                bool _iswalkable = NextTile.IsWalkable;
-                if (_iswalkable)
-                {
-                    CurrentTile.Icon = Floor;
-                    NextTile.Icon = PlayerIcon;
-                    PlayerPOSX--;
-                    PlayerPOSY++;
-                    DisplayPlayerPosition();
-                }
-            }
-            if (_direction == "SouthEast")
-            {
-                Tile CurrentTile = (Tile)GameMap[PlayerPOSX, PlayerPOSY];
-                Tile NextTile = (Tile)GameMap[PlayerPOSX + 1, PlayerPOSY + 1];
-                bool _iswalkable = NextTile.IsWalkable;
-                if (_iswalkable)
-                {
-                    CurrentTile.Icon = Floor;
-                    NextTile.Icon = PlayerIcon;
-                    PlayerPOSX++;
-                    PlayerPOSY++;
-                    DisplayPlayerPosition();
-                }
-            }
-        }
 
         public void PlacePlayer()
         {
@@ -566,198 +463,155 @@ namespace DungeonMap
             } while (_placed == 0);
         }
 
+
         public void DisplayPlayerPosition()
         {
             Console.SetCursorPosition(110, 0);
             Console.WriteLine($"Player Position: x{PlayerPOSX}, y{PlayerPOSY}");
         }
 
-        public void CreateRoom()
+
+        public void MovePlayer(string _direction)
         {
-            Random random = new Random();
-
-            int RoomHeight = random.Next(3, 9);
-            int RoomWidth = random.Next(3, 34);
-
-            int RoomPOSX = random.Next(0, MapSizeX - 1 - RoomWidth);
-            int RoomPOSY = random.Next(0, MapSizeY - 1 - RoomHeight);
-
-            DisplayRoomInfo(RoomWidth + 1, RoomHeight + 1, RoomPOSX, RoomPOSY);
-
-            for (int y = 0; y <= RoomHeight; y++)
+            if (_direction == "North")
             {
-                for (int x = 0; x <= RoomWidth; x++)
+                Tile CurrentTile = (Tile)GameMap[PlayerPOSX, PlayerPOSY];
+                Tile NextTile = (Tile)GameMap[PlayerPOSX, PlayerPOSY - 1];
+                bool _iswalkable = NextTile.IsWalkable;
+                if (_iswalkable)
                 {
-                    if (y == 0 || y == RoomHeight) // "═"
-                    {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, Wall_X, false);
-                    }
-                    else if (x == 0 || x == RoomWidth) // "║"
-                    {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, Wall_Y, false);
-                    }
-                    else // "."
-                    {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, Floor, true);
-                    }
-
-
-                    
-                    if (x == 0 && y == 0)
-                    {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, NWcorner, false);
-                    }
-                    if (y == 0 && x == RoomWidth)
-                    {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, NEcorner, false);
-                    }
-                    if (y == RoomHeight && x == RoomWidth)
-                    {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, SEcorner, false);
-                    }
-                    if (y == RoomHeight && x == 0)
-                    {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, SWcorner, false);
-                    }
-                    
+                    CurrentTile.Icon = FloorIcon;
+                    NextTile.Icon = PlayerIcon;
+                    PlayerPOSY--;
+                    DisplayPlayerPosition();
                 }
             }
-
-            RoomNumber++;
+            if (_direction == "South")
+            {
+                Tile CurrentTile = (Tile)GameMap[PlayerPOSX, PlayerPOSY];
+                Tile NextTile = (Tile)GameMap[PlayerPOSX, PlayerPOSY + 1];
+                bool _iswalkable = NextTile.IsWalkable;
+                if (_iswalkable)
+                {
+                    CurrentTile.Icon = FloorIcon;
+                    NextTile.Icon = PlayerIcon;
+                    PlayerPOSY++;
+                    DisplayPlayerPosition();
+                }
+            }
+            if (_direction == "West")
+            {
+                Tile CurrentTile = (Tile)GameMap[PlayerPOSX, PlayerPOSY];
+                Tile NextTile = (Tile)GameMap[PlayerPOSX - 1, PlayerPOSY];
+                bool _iswalkable = NextTile.IsWalkable;
+                if (_iswalkable)
+                {
+                    CurrentTile.Icon = FloorIcon;
+                    NextTile.Icon = PlayerIcon;
+                    PlayerPOSX--;
+                    DisplayPlayerPosition();
+                }
+            }
+            if (_direction == "East")
+            {
+                Tile CurrentTile = (Tile)GameMap[PlayerPOSX, PlayerPOSY];
+                Tile NextTile = (Tile)GameMap[PlayerPOSX + 1, PlayerPOSY];
+                bool _iswalkable = NextTile.IsWalkable;
+                if (_iswalkable)
+                {
+                    CurrentTile.Icon = FloorIcon;
+                    NextTile.Icon = PlayerIcon;
+                    PlayerPOSX++;
+                    DisplayPlayerPosition();
+                }
+            }
+            if (_direction == "NorthWest")
+            {
+                Tile CurrentTile = (Tile)GameMap[PlayerPOSX, PlayerPOSY];
+                Tile NextTile = (Tile)GameMap[PlayerPOSX - 1, PlayerPOSY - 1];
+                bool _iswalkable = NextTile.IsWalkable;
+                if (_iswalkable)
+                {
+                    CurrentTile.Icon = FloorIcon;
+                    NextTile.Icon = PlayerIcon;
+                    PlayerPOSX--;
+                    PlayerPOSY--;
+                    DisplayPlayerPosition();
+                }
+            }
+            if (_direction == "NorthEast")
+            {
+                Tile CurrentTile = (Tile)GameMap[PlayerPOSX, PlayerPOSY];
+                Tile NextTile = (Tile)GameMap[PlayerPOSX + 1, PlayerPOSY - 1];
+                bool _iswalkable = NextTile.IsWalkable;
+                if (_iswalkable)
+                {
+                    CurrentTile.Icon = FloorIcon;
+                    NextTile.Icon = PlayerIcon;
+                    PlayerPOSX++;
+                    PlayerPOSY--;
+                    DisplayPlayerPosition();
+                }
+            }
+            if (_direction == "SouthWest")
+            {
+                Tile CurrentTile = (Tile)GameMap[PlayerPOSX, PlayerPOSY];
+                Tile NextTile = (Tile)GameMap[PlayerPOSX - 1, PlayerPOSY + 1];
+                bool _iswalkable = NextTile.IsWalkable;
+                if (_iswalkable)
+                {
+                    CurrentTile.Icon = FloorIcon;
+                    NextTile.Icon = PlayerIcon;
+                    PlayerPOSX--;
+                    PlayerPOSY++;
+                    DisplayPlayerPosition();
+                }
+            }
+            if (_direction == "SouthEast")
+            {
+                Tile CurrentTile = (Tile)GameMap[PlayerPOSX, PlayerPOSY];
+                Tile NextTile = (Tile)GameMap[PlayerPOSX + 1, PlayerPOSY + 1];
+                bool _iswalkable = NextTile.IsWalkable;
+                if (_iswalkable)
+                {
+                    CurrentTile.Icon = FloorIcon;
+                    NextTile.Icon = PlayerIcon;
+                    PlayerPOSX++;
+                    PlayerPOSY++;
+                    DisplayPlayerPosition();
+                }
+            }
         }
 
 
-        //public void RoomCollision()
-        //{
-        //    for (int x = 1; x <= MapSizeX - 2; x++)
-        //    {
-        //        for (int y = 1; y <= MapSizeY - 2; y++)
-        //        {
-        //            if (GameMap[x, y] == Wall_X && GameMap[x, y + 1] == Floor && GameMap[x, y - 1] == Floor)
-        //            {
-        //                GameMap[x, y] = Floor;
-        //            }
-        //            if (GameMap[x, y] == Wall_Y && GameMap[x + 1, y] == Floor && GameMap[x - 1, y] == Floor)
-        //            {
-        //                GameMap[x, y] = Floor;
-        //            }
-
-        //            //! need to add code for corners
-                    
-
-        //        }
-        //    }
-        //}
-
-        // needs work, outer frame of map - out of range error
-        //public void FixCorners()
-        //{
-        //    for (int x = 1; x <= MapSizeX - 2; x++)
-        //    {
-        //        for (int y = 1; y <= MapSizeY - 2; y++)
-        //        {
-        //            if (GameMap[x, y + 1] == Wall_Y && GameMap[x + 1, y] == Wall_X)
-        //            {
-        //                GameMap[x, y] = NEcorner;
-        //            }
-        //            if (GameMap[x - 1, y] == Wall_X && GameMap[x, y + 1] == Wall_Y)
-        //            {
-        //                GameMap[x, y] = NWcorner;
-        //            }
-        //            if (GameMap[x, y - 1] == Wall_Y && GameMap[x + 1, y] == Wall_X)
-        //            {
-        //                GameMap[x, y] = SEcorner;
-        //            }
-        //            if (GameMap[x, y - 1] == Wall_Y && GameMap[x - 1, y] == Wall_X)
-        //            {
-        //                GameMap[x, y] = SWcorner;
-        //            }
-        //        }
-        //    }
-        //}
-
-        public void DisplayRoomInfo(int RoomWidth, int RoomHeight, int RoomPOSX, int RoomPOSY)
+        public void DisplayRoomInfo()
         {
-            if (RoomNumber == 1)
-            {
-                Console.SetCursorPosition(110, 2);
-                Console.WriteLine($"Room {RoomNumber} Location: x{RoomPOSX}, y{RoomPOSY}");
+            int _printLocationAt = 0;
+            int _printDimensionsAt = 1;
 
-                Console.SetCursorPosition(110, 3);
-                Console.WriteLine($"Room {RoomNumber} Width: x{RoomWidth}, Hight: y{RoomHeight}");
-            }
-            if (RoomNumber == 2)
+            for (int x = 0; x <= 2; x++)
             {
-                Console.SetCursorPosition(110, 5);
-                Console.WriteLine($"Room {RoomNumber} Location: x{RoomPOSX}, y{RoomPOSY}");
+                for (int y = 0; y <= 2; y++)
+                {
+                    Room CurrentRoom = (Room)rooms[x, y];
+                    int _number = CurrentRoom.Number;
+                    int _posx = CurrentRoom.POSx;
+                    int _posy = CurrentRoom.POSy;
+                    int _height = CurrentRoom.Height;
+                    int _width = CurrentRoom.Width;
 
-                Console.SetCursorPosition(110, 6);
-                Console.WriteLine($"Room {RoomNumber} Width: x{RoomWidth}, Hight: y{RoomHeight}");
-            }
-            if (RoomNumber == 3)
-            {
-                Console.SetCursorPosition(110, 8);
-                Console.WriteLine($"Room {RoomNumber} Location: x{RoomPOSX}, y{RoomPOSY}");
+                    _printDimensionsAt += 3;
+                    _printLocationAt += 3;
 
-                Console.SetCursorPosition(110, 9);
-                Console.WriteLine($"Room {RoomNumber} Width: x{RoomWidth}, Hight: y{RoomHeight}");
-            }
-            if (RoomNumber == 4)
-            {
-                Console.SetCursorPosition(110, 11);
-                Console.WriteLine($"Room {RoomNumber} Location: x{RoomPOSX}, y{RoomPOSY}");
 
-                Console.SetCursorPosition(110, 12);
-                Console.WriteLine($"Room {RoomNumber} Width: x{RoomWidth}, Hight: y{RoomHeight}");
-            }
-            if (RoomNumber == 5)
-            {
-                Console.SetCursorPosition(110, 14);
-                Console.WriteLine($"Room {RoomNumber} Location: x{RoomPOSX}, y{RoomPOSY}");
-
-                Console.SetCursorPosition(110, 15);
-                Console.WriteLine($"Room {RoomNumber} Width: x{RoomWidth}, Hight: y{RoomHeight}");
-            }
-            if (RoomNumber == 6)
-            {
-                Console.SetCursorPosition(110, 17);
-                Console.WriteLine($"Room {RoomNumber} Location: x{RoomPOSX}, y{RoomPOSY}");
-
-                Console.SetCursorPosition(110, 18);
-                Console.WriteLine($"Room {RoomNumber} Width: x{RoomWidth}, Hight: y{RoomHeight}");
-            }
-            if (RoomNumber == 7)
-            {
-                Console.SetCursorPosition(110, 20);
-                Console.WriteLine($"Room {RoomNumber} Location: x{RoomPOSX}, y{RoomPOSY}");
-
-                Console.SetCursorPosition(110, 21);
-                Console.WriteLine($"Room {RoomNumber} Width: x{RoomWidth}, Hight: y{RoomHeight}");
-            }
-            if (RoomNumber == 8)
-            {
-                Console.SetCursorPosition(110, 23);
-                Console.WriteLine($"Room {RoomNumber} Location: x{RoomPOSX}, y{RoomPOSY}");
-
-                Console.SetCursorPosition(110, 24);
-                Console.WriteLine($"Room {RoomNumber} Width: x{RoomWidth}, Hight: y{RoomHeight}");
-            }
-            if (RoomNumber == 9)
-            {
-                Console.SetCursorPosition(110, 26);
-                Console.WriteLine($"Room {RoomNumber} Location: x{RoomPOSX}, y{RoomPOSY}");
-
-                Console.SetCursorPosition(110, 27);
-                Console.WriteLine($"Room {RoomNumber} Width: x{RoomWidth}, Hight: y{RoomHeight}");
-            }
-            if (RoomNumber == 10)
-            {
-                Console.SetCursorPosition(110, 29);
-                Console.WriteLine($"Room {RoomNumber} Location: x{RoomPOSX}, y{RoomPOSY}");
-
-                Console.SetCursorPosition(110, 30);
-                Console.WriteLine($"Room {RoomNumber} Width: x{RoomWidth}, Hight: y{RoomHeight}");
+                    Console.SetCursorPosition(110, _printLocationAt);
+                    Console.WriteLine($"Room {_number} Location: x{_posx}, y{_posy}");
+                    Console.SetCursorPosition(110, _printDimensionsAt);
+                    Console.WriteLine($"Room {_number} Width: x{_width}, Hight: y{_height}");
+                }
             }
         }
+
+
     }
 }
