@@ -31,7 +31,7 @@ namespace DungeonMap
             map.PlacePlayer();
             map.PlaceMonster();
 
-           // map.DisplayRoomInfo();
+            map.DisplayRoomInfo();
 
             map.Display();
 

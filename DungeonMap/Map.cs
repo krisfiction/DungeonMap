@@ -321,15 +321,15 @@ namespace DungeonMap
             int HallpartB = Door1y + HallLength - HallpartA;
 
 
-            Console.SetCursorPosition(110, 1);
-            Console.WriteLine("hallrandom: " + HallRandom + " HallLength: " + HallLength);
+            //Console.SetCursorPosition(110, 1);
+            //Console.WriteLine("hallrandom: " + HallRandom + " HallLength: " + HallLength);
 
-            Console.SetCursorPosition(110, 2);
-            Console.WriteLine("door1x: " + Door1x + " Door1y: " + Door1y);
-            Console.SetCursorPosition(110, 3);
-            Console.WriteLine("door2x: " + Door2x + " Door2y: " + Door2y);
-            Console.SetCursorPosition(110, 4);
-            Console.WriteLine("hallA: " + HallpartA + " HallB: " + HallpartB);
+            //Console.SetCursorPosition(110, 2);
+            //Console.WriteLine("door1x: " + Door1x + " Door1y: " + Door1y);
+            //Console.SetCursorPosition(110, 3);
+            //Console.WriteLine("door2x: " + Door2x + " Door2y: " + Door2y);
+            //Console.SetCursorPosition(110, 4);
+            //Console.WriteLine("hallA: " + HallpartA + " HallB: " + HallpartB);
 
             //todo check if door1 and door2 are on same y path
             if (Door1x == Door2x)
