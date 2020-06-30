@@ -160,12 +160,86 @@ namespace DungeonMap
         }
 
 
-        //! connecting room 2 [0, 1] to room 3 [0, 2]
         public void CreateHallways()
+        {
+            Room room1 = (Room)rooms[0, 0];
+            Room room2 = (Room)rooms[0, 1];
+            Room room3 = (Room)rooms[0, 2];
+
+            Room room4 = (Room)rooms[1, 0];
+            Room room5 = (Room)rooms[1, 1];
+            Room room6 = (Room)rooms[1, 2];
+
+            Room room7 = (Room)rooms[2, 0];
+            Room room8 = (Room)rooms[2, 1];
+            Room room9 = (Room)rooms[2, 2];
+
+
+            if (room1.Number != 0 && room2.Number != 0)
+            {
+                CreateHorizontalHallways(0, 0, 0, 1);
+            }
+            if (room2.Number != 0 && room3.Number != 0)
+            {
+                CreateHorizontalHallways(0, 1, 0, 2);
+            }
+            if (room1.Number != 0 && room3.Number != 0)
+            {
+                if (room2.Number == 0)
+                {
+                    CreateHorizontalHallways(0, 0, 0, 2);
+                }
+            }
+
+            if (room4.Number != 0 && room5.Number != 0)
+            {
+                CreateHorizontalHallways(1, 0, 1, 1);
+            }
+            if (room5.Number != 0 && room6.Number != 0)
+            {
+                CreateHorizontalHallways(1, 1, 1, 2);
+            }
+            if (room4.Number != 0 && room6.Number != 0)
+            {
+                if (room5.Number == 0)
+                {
+                    CreateHorizontalHallways(1, 0, 1, 2);
+                }
+            }
+
+            if (room7.Number != 0 && room8.Number != 0)
+            {
+                CreateHorizontalHallways(2, 0, 2, 1);
+            }
+            if (room8.Number != 0 && room9.Number != 0)
+            {
+                CreateHorizontalHallways(2, 1, 2, 2);
+            }
+            if (room7.Number != 0 && room9.Number != 0)
+            {
+                if (room8.Number == 0)
+                {
+                    CreateHorizontalHallways(2, 0, 2, 2);
+                }
+            }
+
+
+
+        }
+
+
+
+
+
+
+
+
+        //! connecting room 2 [0, 1] to room 3 [0, 2]
+        public void CreateHorizontalHallways(int OneX, int OneY, int TwoX, int TwoY)
         {
             Random random = new Random();
             //! room 1
-            Room Room1 = (Room)rooms[0, 1];
+            Room Room1 = (Room)rooms[OneX, OneY];
             int _number1 = Room1.Number;
             int _posx1 = Room1.POSx;
             int _posy1 = Room1.POSy;
@@ -173,7 +247,7 @@ namespace DungeonMap
             int _width1 = Room1.Width;
 
             //! room 2
-            Room Room2 = (Room)rooms[0, 2];
+            Room Room2 = (Room)rooms[TwoX, TwoY];
             int _number2 = Room2.Number;
             int _posx2 = Room2.POSx;
             int _posy2 = Room2.POSy;
