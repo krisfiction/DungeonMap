@@ -10,31 +10,27 @@ namespace DungeonMap
             Console.CursorVisible = false; //to hide the cursor
             Console.Clear();
 
-
-            Console.SetCursorPosition(110, 34);
-            Console.WriteLine(("").PadLeft(30, '#'));
-         
-
+            //Console.SetCursorPosition(110, 34);
+            //Console.WriteLine(("").PadLeft(30, '#'));
 
             Map map = new Map();
-
             map.FillMap();
+            map.FillRooms();
+           
+            map.Create();
 
-            int _roomCount = 0;
-            do
+            // make at least 3 rooms
+            if (map.NumberOfRooms < 3)
             {
-                map.CreateRoom();
-                _roomCount++;
-            } while (_roomCount < 10); //make 10 rooms
+                Main();
+            }
 
-
-            //map.RoomCollision();
-            //map.FixCorners();
-
+            map.CreateHallways();
+            
             map.PlacePlayer();
-
             map.PlaceMonster();
 
+            map.DisplayRoomInfo();
 
             map.Display();
 
