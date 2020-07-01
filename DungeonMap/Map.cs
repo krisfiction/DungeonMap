@@ -29,6 +29,30 @@ namespace DungeonMap
 
         public int NumberOfRooms = 0;
 
+
+        //todo when a room is alone on both axis it will not connect to anything
+        
+        //!     ║     ║  O
+        //!═════║═════║══════
+        //!     ║     ║
+        //!     ║   X ║  
+        //!═════║═════║══════
+        //!     ║     ║
+        //!  O  ║     ║  O
+
+        //! O will each connect
+        //! X will not connect to anything
+
+
+        //todo update tile to add a room/hallway property
+        //todo visable
+        //todo discovered
+        //todo stairs up/down
+
+
+        //? move hallway to its own class
+
+
         public void Create()
         {
             Random random = new Random();
@@ -49,8 +73,8 @@ namespace DungeonMap
                 CreateRoom(RoomPOSX, RoomPOSY, RoomHeight, RoomWidth);
             }
 
-            //! auto build to test hallways
-            buildRoom = 1;// random.Next(1, 3);
+            
+            buildRoom = random.Next(1, 3);
             if (buildRoom == 1)
             {
                 int RoomHeight = random.Next(3, 9);
@@ -63,8 +87,8 @@ namespace DungeonMap
                 CreateRoom(RoomPOSX, RoomPOSY, RoomHeight, RoomWidth);
             }
 
-            //! auto build to test hallways
-            buildRoom = 1;// random.Next(1, 3);
+            
+            buildRoom = random.Next(1, 3);
             if (buildRoom == 1)
             {
                 int RoomHeight = random.Next(3, 9);
@@ -105,6 +129,7 @@ namespace DungeonMap
                 CreateRoom(RoomPOSX, RoomPOSY, RoomHeight, RoomWidth);
             }
 
+            
             buildRoom = random.Next(1, 3);
             if (buildRoom == 1)
             {
@@ -224,12 +249,183 @@ namespace DungeonMap
             }
 
 
+            //veritcal hallways
+            if (room1.Number != 0 && room4.Number != 0)
+            {
+                CreateVeritcalHallways(0, 0, 1, 0);
+            }
+            if (room4.Number != 0 && room7.Number != 0)
+            {
+                CreateVeritcalHallways(1, 0, 2, 0);
+            }
+            if (room1.Number != 0 && room7.Number != 0)
+            {
+                if (room4.Number == 0)
+                {
+                    CreateVeritcalHallways(0, 0, 2, 0);
+                }
+            }
+
+            if (room2.Number != 0 && room5.Number != 0)
+            {
+                CreateVeritcalHallways(0, 1, 1, 1);
+            }
+            if (room5.Number != 0 && room8.Number != 0)
+            {
+                CreateVeritcalHallways(1, 1, 2, 1);
+            }
+            if (room2.Number != 0 && room8.Number != 0)
+            {
+                if (room5.Number == 0)
+                {
+                    CreateVeritcalHallways(0, 1, 2, 1);
+                }
+            }
+
+            if (room3.Number != 0 && room6.Number != 0)
+            {
+                CreateVeritcalHallways(0, 2, 1, 2);
+            }
+            if (room6.Number != 0 && room9.Number != 0)
+            {
+                CreateVeritcalHallways(1, 2, 2, 2);
+            }
+            if (room3.Number != 0 && room9.Number != 0)
+            {
+                if (room6.Number == 0)
+                {
+                    CreateVeritcalHallways(0, 2, 2, 2);
+                }
+            }
+
+
+
+
+
+
+
 
         }
 
+        public void CreateVeritcalHallways(int OneX, int OneY, int TwoX, int TwoY)
+        {
+            Random random = new Random();
+            //! room 1
+            Room Room1 = (Room)rooms[OneX, OneY];
+            int _number1 = Room1.Number;
+            int _posx1 = Room1.POSx;
+            int _posy1 = Room1.POSy;
+            int _height1 = Room1.Height;
+            int _width1 = Room1.Width;
+
+            //! room 2
+            Room Room2 = (Room)rooms[TwoX, TwoY];
+            int _number2 = Room2.Number;
+            int _posx2 = Room2.POSx;
+            int _posy2 = Room2.POSy;
+            int _height2 = Room2.Height;
+            int _width2 = Room2.Width;
+
+            //! connect room 1 to room 2
+
+            //! door 1 x, y
+            int RandomDoor1 = random.Next(1, _width1);
+            int Door1x = _posx1 + RandomDoor1;
+            int Door1y = _posy1 + _height1;
+
+            //! door 2 x, y
+            int RandomDoor2 = random.Next(1, _width2);
+            int Door2x = _posx2 + RandomDoor2;
+            int Door2y = _posy2;
+
+            //! hallway
+            int HallLength = Door2y - _posy1 - _height1;
+            int HallRandom = random.Next(1, HallLength);
+            int HallpartA = HallLength - HallRandom;
+            int HallpartB = Door1y + HallLength - HallpartA;
 
 
+            //Console.SetCursorPosition(110, 1);
+            //Console.WriteLine("hallrandom: " + HallRandom + " HallLength: " + HallLength);
 
+            //Console.SetCursorPosition(110, 2);
+            //Console.WriteLine("door1x: " + Door1x + " Door1y: " + Door1y);
+            //Console.SetCursorPosition(110, 3);
+            //Console.WriteLine("door2x: " + Door2x + " Door2y: " + Door2y);
+            //Console.SetCursorPosition(110, 4);
+            //Console.WriteLine("hallA: " + HallpartA + " HallB: " + HallpartB);
+
+            //todo check if door1 and door2 are on same y path
+            if (Door1x == Door2x)
+            {
+                int x = Door1x;
+                for (int y = Door1y; y <= Door2y; y++)
+                {
+                    Tile CurrentTile = (Tile)GameMap[x, y];
+                    CurrentTile.Icon = FloorIcon;
+                    CurrentTile.IsWalkable = true;
+
+                    if (y == _posy1 + _height1)
+                    {
+                        Tile UcornerTile = (Tile)GameMap[x, y];
+                        UcornerTile.Icon = DoorIcon;
+                        UcornerTile.IsWalkable = true;
+                    }
+
+                    if (y == Door2y)
+                    {
+                        Tile UcornerTile = (Tile)GameMap[x, y];
+                        UcornerTile.Icon = DoorIcon;
+                        UcornerTile.IsWalkable = true;
+                    }
+                }
+            }
+            
+            else
+            {
+                //todo build z hallway
+                int x = Door1x;
+                for (int y = Door1y; y <= HallpartB; y++)
+                {
+                    Tile CurrentTile = (Tile)GameMap[x, y];
+                    CurrentTile.Icon = FloorIcon;
+                    CurrentTile.IsWalkable = true;
+                }
+                x = Door2x;
+                for (int y = HallpartB; y <= Door2y; y++)
+                {
+                    Tile CurrentTile = (Tile)GameMap[x, y];
+                    CurrentTile.Icon = FloorIcon;
+                    CurrentTile.IsWalkable = true;
+                }
+
+                if (Door1x < Door2x)
+                {
+                    int y1 = HallpartB;
+                    for (int x1 = Door1x; x1 <= Door2x; x1++)
+                    {
+                        Tile CurrentTile = (Tile)GameMap[x1, y1];
+                        CurrentTile.Icon = FloorIcon;
+                        CurrentTile.IsWalkable = true;
+                    }
+                }
+                else
+                {
+                    int y1 = HallpartB;
+                    for (int x1 = Door2x; x1 <= Door1x; x1++)
+                    {
+                        Tile CurrentTile = (Tile)GameMap[x1, y1];
+                        CurrentTile.Icon = FloorIcon;
+                        CurrentTile.IsWalkable = true;
+                    }
+
+                }
+
+            }
+            
+
+
+        }
 
 
 
@@ -376,12 +572,7 @@ namespace DungeonMap
 
                 }
 
-
-
             }
-
-
-
         }
 
 
