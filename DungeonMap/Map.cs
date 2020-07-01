@@ -29,6 +29,30 @@ namespace DungeonMap
 
         public int NumberOfRooms = 0;
 
+
+        //todo when a room is alone on both axis it will not connect to anything
+        
+        //!     ║     ║  O
+        //!═════║═════║══════
+        //!     ║     ║
+        //!     ║   X ║  
+        //!═════║═════║══════
+        //!     ║     ║
+        //!  O  ║     ║  O
+
+        //! O will each connect
+        //! X will not connect to anything
+
+
+        //todo update tile to add a room/hallway property
+        //todo visable
+        //todo discovered
+        //todo stairs up/down
+
+
+        //? move hallway to its own class
+
+
         public void Create()
         {
             Random random = new Random();
@@ -63,8 +87,8 @@ namespace DungeonMap
                 CreateRoom(RoomPOSX, RoomPOSY, RoomHeight, RoomWidth);
             }
 
-            //! auto build to test hallways
-            buildRoom = 1;// random.Next(1, 3);
+            
+            buildRoom = random.Next(1, 3);
             if (buildRoom == 1)
             {
                 int RoomHeight = random.Next(3, 9);
@@ -105,8 +129,8 @@ namespace DungeonMap
                 CreateRoom(RoomPOSX, RoomPOSY, RoomHeight, RoomWidth);
             }
 
-            //! auto build to test hallways
-            buildRoom = 1; // random.Next(1, 3);
+            
+            buildRoom = random.Next(1, 3);
             if (buildRoom == 1)
             {
                 int RoomHeight = random.Next(3, 9);
