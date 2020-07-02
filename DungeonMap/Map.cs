@@ -391,17 +391,35 @@ namespace DungeonMap
                 for (int y = Door1y; y <= HallpartB; y++)
                 {
                     Tile CurrentTile = (Tile)GameMap[x, y];
-                    CurrentTile.Icon = FloorIcon;
-                    CurrentTile.IsWalkable = true;
-                    CurrentTile.IsHallway = true;
+                    if (y == Door1y)
+                    {
+                        CurrentTile.Icon = DoorIcon;
+                        CurrentTile.IsWalkable = true;
+                        CurrentTile.IsHallway = true;
+                    }
+                    else
+                    {
+                        CurrentTile.Icon = FloorIcon;
+                        CurrentTile.IsWalkable = true;
+                        CurrentTile.IsHallway = true;
+                    }
                 }
                 x = Door2x;
                 for (int y = HallpartB; y <= Door2y; y++)
                 {
                     Tile CurrentTile = (Tile)GameMap[x, y];
-                    CurrentTile.Icon = FloorIcon;
-                    CurrentTile.IsWalkable = true;
-                    CurrentTile.IsHallway = true;
+                    if (y == Door2y)
+                    {
+                        CurrentTile.Icon = DoorIcon;
+                        CurrentTile.IsWalkable = true;
+                        CurrentTile.IsHallway = true;
+                    }
+                    else
+                    {
+                        CurrentTile.Icon = FloorIcon;
+                        CurrentTile.IsWalkable = true;
+                        CurrentTile.IsHallway = true;
+                    }
                 }
 
                 if (Door1x < Door2x)
@@ -549,17 +567,35 @@ namespace DungeonMap
                 for (int x = Door1x; x <= HallpartB; x++)
                 {
                     Tile CurrentTile = (Tile)GameMap[x, y];
-                    CurrentTile.Icon = FloorIcon;
-                    CurrentTile.IsWalkable = true;
-                    CurrentTile.IsHallway = true;
+                    if (x == Door1x)
+                    {
+                        CurrentTile.Icon = DoorIcon;
+                        CurrentTile.IsWalkable = true;
+                        CurrentTile.IsHallway = true;
+                    }
+                    else
+                    {
+                        CurrentTile.Icon = FloorIcon;
+                        CurrentTile.IsWalkable = true;
+                        CurrentTile.IsHallway = true;
+                    }
                 }
                 y = Door2y;
                 for (int x = HallpartB; x <= Door2x; x++)
                 {
                     Tile CurrentTile = (Tile)GameMap[x, y];
-                    CurrentTile.Icon = FloorIcon;
-                    CurrentTile.IsWalkable = true;
-                    CurrentTile.IsHallway = true;
+                    if (x == Door2x)
+                    {
+                        CurrentTile.Icon = DoorIcon;
+                        CurrentTile.IsWalkable = true;
+                        CurrentTile.IsHallway = true;
+                    }
+                    else
+                    {
+                        CurrentTile.Icon = FloorIcon;
+                        CurrentTile.IsWalkable = true;
+                        CurrentTile.IsHallway = true;
+                    }
                 }
 
                 if (Door1y < Door2y)
