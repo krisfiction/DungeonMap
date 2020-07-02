@@ -364,12 +364,14 @@ namespace DungeonMap
                     Tile CurrentTile = (Tile)GameMap[x, y];
                     CurrentTile.Icon = FloorIcon;
                     CurrentTile.IsWalkable = true;
+                    CurrentTile.IsHallway = true;
 
                     if (y == _posy1 + _height1)
                     {
                         Tile UcornerTile = (Tile)GameMap[x, y];
                         UcornerTile.Icon = DoorIcon;
                         UcornerTile.IsWalkable = true;
+                        UcornerTile.IsHallway = true;
                     }
 
                     if (y == Door2y)
@@ -377,6 +379,7 @@ namespace DungeonMap
                         Tile UcornerTile = (Tile)GameMap[x, y];
                         UcornerTile.Icon = DoorIcon;
                         UcornerTile.IsWalkable = true;
+                        UcornerTile.IsHallway = true;
                     }
                 }
             }
@@ -390,6 +393,7 @@ namespace DungeonMap
                     Tile CurrentTile = (Tile)GameMap[x, y];
                     CurrentTile.Icon = FloorIcon;
                     CurrentTile.IsWalkable = true;
+                    CurrentTile.IsHallway = true;
                 }
                 x = Door2x;
                 for (int y = HallpartB; y <= Door2y; y++)
@@ -397,6 +401,7 @@ namespace DungeonMap
                     Tile CurrentTile = (Tile)GameMap[x, y];
                     CurrentTile.Icon = FloorIcon;
                     CurrentTile.IsWalkable = true;
+                    CurrentTile.IsHallway = true;
                 }
 
                 if (Door1x < Door2x)
@@ -407,6 +412,7 @@ namespace DungeonMap
                         Tile CurrentTile = (Tile)GameMap[x1, y1];
                         CurrentTile.Icon = FloorIcon;
                         CurrentTile.IsWalkable = true;
+                        CurrentTile.IsHallway = true;
                     }
                 }
                 else
@@ -417,6 +423,7 @@ namespace DungeonMap
                         Tile CurrentTile = (Tile)GameMap[x1, y1];
                         CurrentTile.Icon = FloorIcon;
                         CurrentTile.IsWalkable = true;
+                        CurrentTile.IsHallway = true;
                     }
 
                 }
@@ -478,6 +485,7 @@ namespace DungeonMap
                     Tile CurrentTile = (Tile)GameMap[x, y];
                     CurrentTile.Icon = FloorIcon;
                     CurrentTile.IsWalkable = true;
+                    CurrentTile.IsHallway = true;
 
                     //! walls and corner walls around the hallway
                     //! needs tweaked but mostly works however it is disabled untill i get hallways working correctly
@@ -495,6 +503,7 @@ namespace DungeonMap
                         Tile UcornerTile = (Tile)GameMap[x, y];
                         UcornerTile.Icon = DoorIcon;
                         UcornerTile.IsWalkable = true;
+                        UcornerTile.IsHallway = true;
 
                         //    Tile UcornerTile = (Tile)GameMap[x, y - 1];
                         //    UcornerTile.Icon = SWcornerIcon;
@@ -510,6 +519,7 @@ namespace DungeonMap
                         Tile UcornerTile = (Tile)GameMap[x, y];
                         UcornerTile.Icon = DoorIcon;
                         UcornerTile.IsWalkable = true;
+                        UcornerTile.IsHallway = true;
 
                         //    Tile UcornerTile = (Tile)GameMap[x, y - 1];
                         //    UcornerTile.Icon = SEcornerIcon;
@@ -541,6 +551,7 @@ namespace DungeonMap
                     Tile CurrentTile = (Tile)GameMap[x, y];
                     CurrentTile.Icon = FloorIcon;
                     CurrentTile.IsWalkable = true;
+                    CurrentTile.IsHallway = true;
                 }
                 y = Door2y;
                 for (int x = HallpartB; x <= Door2x; x++)
@@ -548,6 +559,7 @@ namespace DungeonMap
                     Tile CurrentTile = (Tile)GameMap[x, y];
                     CurrentTile.Icon = FloorIcon;
                     CurrentTile.IsWalkable = true;
+                    CurrentTile.IsHallway = true;
                 }
 
                 if (Door1y < Door2y)
@@ -558,6 +570,7 @@ namespace DungeonMap
                         Tile CurrentTile = (Tile)GameMap[x1, y1];
                         CurrentTile.Icon = FloorIcon;
                         CurrentTile.IsWalkable = true;
+                        CurrentTile.IsHallway = true;
                     }
                 }
                 else
@@ -568,6 +581,7 @@ namespace DungeonMap
                         Tile CurrentTile = (Tile)GameMap[x1, y1];
                         CurrentTile.Icon = FloorIcon;
                         CurrentTile.IsWalkable = true;
+                        CurrentTile.IsHallway = true;
                     }
 
                 }
@@ -592,34 +606,34 @@ namespace DungeonMap
                     //apply walls
                     if (y == 0 || y == RoomHeight) // "═"
                     {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, WallxIcon, false);
+                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, WallxIcon, false, false);
                     }
                     else if (x == 0 || x == RoomWidth) // "║"
                     {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, WallyIcon, false);
+                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, WallyIcon, false, false);
                     }
                     //apply floors
                     else // "."
                     {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, FloorIcon, true);
+                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, FloorIcon, true, false);
                     }
 
                     // apply corner walls
                     if (x == 0 && y == 0)
                     {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, NWcornerIcon, false);
+                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, NWcornerIcon, false, false);
                     }
                     if (y == 0 && x == RoomWidth)
                     {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, NEcornerIcon, false);
+                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, NEcornerIcon, false, false);
                     }
                     if (y == RoomHeight && x == RoomWidth)
                     {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, SEcornerIcon, false);
+                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, SEcornerIcon, false, false);
                     }
                     if (y == RoomHeight && x == 0)
                     {
-                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, SWcornerIcon, false);
+                        GameMap[RoomPOSX + x, RoomPOSY + y] = new Tile(x, y, SWcornerIcon, false, false);
                     }
 
                 }
@@ -639,7 +653,7 @@ namespace DungeonMap
             {
                 for (int y = 0; y <= MapSizeY - 1; y++)
                 {
-                    GameMap[x, y] = new Tile(x, y, " ", false);
+                    GameMap[x, y] = new Tile(x, y, " ", false, false);
                 }
             }
         }
@@ -692,8 +706,9 @@ namespace DungeonMap
 
                 Tile CurrentTile = (Tile)GameMap[_randX, _randY];
                 bool _iswalkable = CurrentTile.IsWalkable;
+                bool _ishallway = CurrentTile.IsHallway;
 
-                if (_iswalkable && _placed == 0)
+                if (_iswalkable && _placed == 0 && !_ishallway)
                 {
                     CurrentTile.Icon = PlayerIcon;
 
@@ -719,8 +734,9 @@ namespace DungeonMap
 
                 Tile CurrentTile = (Tile)GameMap[_randX, _randY];
                 bool _iswalkable = CurrentTile.IsWalkable;
+                bool _ishallway = CurrentTile.IsHallway;
 
-                if (_iswalkable && _placed == 0)
+                if (_iswalkable && _placed == 0 && !_ishallway)
                 {
                     CurrentTile.Icon = "M";
                     _placed = 1;
