@@ -7,7 +7,7 @@ namespace DungeonMap
         private readonly string WallxIcon = "═";
         private readonly string WallyIcon = "║";
         private readonly string FloorIcon = "·"; //ascii #183 middle dot
-        private readonly string DoorIcon = "+";
+        private readonly string DoorIcon = "/"; // not sure what door icon i will use /, \, or + (or somthing else)
 
         public string NWcornerIcon = "╔";
         public string NEcornerIcon = "╗";
