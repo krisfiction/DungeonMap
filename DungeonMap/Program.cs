@@ -6,6 +6,7 @@ namespace DungeonMap
     {
         private static void Main()
         {
+            Console.Title = "DungeonMap";
             Console.SetWindowSize(140, 46); //map will be 110x35, giving 30 spaces on the side and 10 lines below (+1 to prevent scroll on window)
             Console.CursorVisible = false; //to hide the cursor
             Console.Clear();
