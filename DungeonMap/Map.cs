@@ -723,8 +723,26 @@ namespace DungeonMap
                     Tile CurrentTile = (Tile)GameMap[x, y];
                     string _icon = CurrentTile.Icon;
 
-                    Console.SetCursorPosition(x, y);
-                    Console.WriteLine(_icon);
+
+                    if (_icon == PlayerIcon) //set player icon to blue
+                    {
+                        Console.SetCursorPosition(x, y);
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.WriteLine(_icon);
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                    else if (_icon == "M") //set monster icon to red
+                    {
+                        Console.SetCursorPosition(x, y);
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine(_icon);
+                        Console.ForegroundColor = ConsoleColor.White;
+                    }
+                    else
+                    {
+                        Console.SetCursorPosition(x, y);
+                        Console.WriteLine(_icon);
+                    }
                 }
             }
         }
